@@ -7,3 +7,10 @@ AppSentry_Lockdown_*.ps1
 M365AppGuard_Lockdown_*.ps1
 .DS_Store
 Thumbs.db
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
