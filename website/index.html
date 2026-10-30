@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppSentry for M365 | Entra ID App & Supply-Chain Security Scanner</title>
+    <meta name="description" content="100% Read-Only Open-Source Security Scanner for Microsoft Entra ID Enterprise Applications, App Registrations, 24-Month Threat Watchlist & 3-Stage Soft-Lockdown Playbooks.">
+    <style>
+        :root {
+            --bg-main: #060d1a;
+            --bg-card: #0f1c31;
+            --bg-card-hover: #152744;
+            --text-primary: #f0f6fc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-red: #ef4444;
+            --accent-amber: #f59e0b;
+            --border-color: rgba(56, 189, 248, 0.18);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #0c2340 0%, var(--bg-main) 55%);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        a { color: var(--accent-cyan); text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        header {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(6, 13, 26, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 0;
+        }
+        .nav-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.25rem; color: #fff; }
+        .brand img { width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--accent-cyan); }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
+            cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+            color: #04131d; font-weight: 700;
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(6, 182, 212, 0.35); }
+        .btn-outline {
+            background: rgba(15, 28, 49, 0.8);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+        .btn-outline:hover { border-color: var(--accent-cyan); background: var(--bg-card-hover); }
+        .hero { padding: 64px 0 48px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+        @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+        .badge-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(16, 185, 129, 0.12); color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 6px 14px; border-radius: 999px; font-size: 0.82rem; font-weight: 700;
+            margin-bottom: 18px;
+        }
+        h1 { font-size: 2.75rem; line-height: 1.15; margin-bottom: 18px; letter-spacing: -0.02em; }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-sub { font-size: 1.12rem; color: var(--text-secondary); margin-bottom: 28px; }
+        .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+        .hero-img-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+        }
+        .hero-img-card img { width: 100%; border-radius: 10px; display: block; }
+        .code-box {
+            background: #050a14; border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 18px 20px; font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.88rem; color: #38bdf8; overflow-x: auto; margin-top: 16px;
+        }
+        .code-box span.comment { color: #64748b; }
+        .section { padding: 52px 0; border-top: 1px solid rgba(255,255,255,0.06); }
+        .section-title { font-size: 1.9rem; margin-bottom: 10px; text-align: center; }
+        .section-sub { color: var(--text-secondary); text-align: center; max-width: 760px; margin: 0 auto 36px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 26px; transition: transform 0.2s ease;
+        }
+        .card:hover { transform: translateY(-3px); border-color: var(--accent-cyan); }
+        .card-tag {
+            display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 4px 10px;
+            border-radius: 6px; margin-bottom: 12px; text-transform: uppercase;
+        }
+        .tag-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; }
+        .tag-red { background: rgba(239, 68, 68, 0.18); color: #f87171; }
+        .tag-green { background: rgba(16, 185, 129, 0.18); color: #34d399; }
+        .card h3 { font-size: 1.25rem; margin-bottom: 10px; }
+        .card p { color: var(--text-secondary); font-size: 0.95rem; }
+        .banner-showcase {
+            margin-top: 32px; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 16px; text-align: center;
+        }
+        .banner-showcase img { width: 100%; max-height: 520px; object-fit: cover; border-radius: 10px; }
+        footer {
+            padding: 36px 0; border-top: 1px solid var(--border-color);
+            text-align: center; color: var(--text-secondary); font-size: 0.9rem;
+        }
+        [data-lang="en"] { display: none; }
+        html[lang="en"] [data-lang="de"] { display: none; }
+        html[lang="en"] [data-lang="en"] { display: block; }
+        html[lang="en"] span[data-lang="en"], html[lang="de"] span[data-lang="de"] { display: inline; }
+        html[lang="en"] span[data-lang="de"], html[lang="de"] span[data-lang="en"] { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-bar">
+            <div class="brand">
+                <img src="assets/appsentry-logo.png" alt="AppSentry Logo">
+                <span>AppSentry <span class="gradient-text">for M365</span></span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-outline" onclick="toggleLang()" id="langBtn">🇬🇧 EN / 🇩🇪 DE</button>
+                <a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">📚 Security Blog</a>
+                <a class="btn btn-primary" href="https://github.com/MKN1411/AppSentry-for-M365" target="_blank" rel="noopener">⭐ GitHub Repo</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div>
+                <div class="badge-pill">
+                    <span data-lang="de">🛡️ 100% Read-Only Scan • 3-Stufen Soft-Lockdown • Open Source (MIT)</span>
+                    <span data-lang="en">🛡️ 100% Read-Only Scan • 3-Stage Soft-Lockdown • Open Source (MIT)</span>
+                </div>
+                <h1 data-lang="de">Schützen Sie Microsoft 365 vor <span class="gradient-text">OAuth- & Supply-Chain-Risiken</span></h1>
+                <h1 data-lang="en">Protect Microsoft 365 Against <span class="gradient-text">OAuth & Supply-Chain Risks</span></h1>
+
+                <p class="hero-sub" data-lang="de">
+                    <strong>AppSentry für M365</strong> analysiert Ihre globalen Entra ID App-Schutzrichtlinien (<code>T-01</code> bis <code>T-14</code>), gleicht alle Enterprise Apps mit einer kuratierten <strong>24-Monats Threat-Watchlist</strong> ab und generiert sichere <code>-WhatIf</code> Lockdown-Playbooks für CISO, Auditoren (NIS2, DORA, ISO 27001) und Admins.
+                </p>
+                <p class="hero-sub" data-lang="en">
+                    <strong>AppSentry for M365</strong> audits your global Entra ID app protection policies (<code>T-01</code> to <code>T-14</code>), screens every Enterprise Application against a curated <strong>24-Month Threat Watchlist</strong>, and generates safe <code>-WhatIf</code> Lockdown Playbooks for CISOs, auditors (NIS2, DORA, ISO 27001), and admins.
+                </p>
+
+                <div class="hero-cta">
+                    <a class="btn btn-primary" href="https://github.com/MKN1411/AppSentry-for-M365" target="_blank" rel="noopener">
+                        <span data-lang="de">🚀 Kostenlos auf GitHub herunterladen</span>
+                        <span data-lang="en">🚀 Download Free on GitHub</span>
+                    </a>
+                    <a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">
+                        <span data-lang="de">📖 Fachartikel im Blog lesen</span>
+                        <span data-lang="en">📖 Read the Blog Post</span>
+                    </a>
+                </div>
+
+                <div class="code-box">
+                    <span class="comment"># PowerShell 7+ Quickstart (100% Read-Only)</span><br>
+                    git clone https://github.com/MKN1411/AppSentry-for-M365.git<br>
+                    Import-Module .\AppSentry-for-M365\src\AppSentry.psd1 -Force<br>
+                    Invoke-AppSentry -Language DE
+                </div>
+            </div>
+
+            <div class="hero-img-card">
+                <img src="assets/appsentry-blog-hero.png" alt="AppSentry for M365 Hero Illustration">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-lang="de">Die 3-Block Sicherheits- & Nachweis-Architektur</h2>
+            <h2 class="section-title" data-lang="en">The 3-Block Security & Audit Proof Architecture</h2>
+            <p class="section-sub" data-lang="de">Kein Rätselraten mehr bei kompromittierten Drittanbieter-Apps oder versteckten Client-Secrets: AppSentry liefert volle Transparenz in Sekunden.</p>
+            <p class="section-sub" data-lang="en">No more guesswork around compromised third-party vendors or rogue client secrets: AppSentry delivers full visibility in seconds.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-tag tag-cyan">Block 1 • T-01 .. T-14</span>
+                    <h3 data-lang="de">14 Globale Tenant-Richtlinien & Audit-Log</h3>
+                    <h3 data-lang="en">14 Global Tenant Policies & Audit Log</h3>
+                    <p data-lang="de">Prüft User Consent, Gruppenbesitzer-Einwilligung, App-Erstellungsrechte und <code>defaultAppManagementPolicy</code> Passwort-Sperren – inkl. Entra Audit-Log-Nachweis (Wer hat wann welche Einstellung geändert?).</p>
+                    <p data-lang="en">Evaluates User Consent, Group Owner Consent, app creation rights, and <code>defaultAppManagementPolicy</code> password restrictions — complete with Entra Directory Audit Log attribution.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-tag tag-red">Block 2 • 23 Threat IOCs</span>
+                    <h3 data-lang="de">24-Monats Threat-Watchlist & Negativnachweis</h3>
+                    <h3 data-lang="en">24-Month Threat Watchlist & Negative Proof</h3>
+                    <p data-lang="de">Erkennt bekannte Supply-Chain-Vorfälle (z. B. ConnectWise/SkyKick, Midnight Blizzard, eM Client, ungehärtete LotL Admin-CLIs) und beweist schwarz auf grün, welche Risiko-Apps <strong>nicht</strong> im Tenant existieren.</p>
+                    <p data-lang="en">Detects high-profile supply-chain breaches (e.g., ConnectWise/SkyKick, Midnight Blizzard, eM Client, unhardened LotL Admin CLIs) and provides a Green Negative Proof for apps <strong>not</strong> present in your tenant.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-tag tag-green">Block 3 • 3-Stage Lockdown</span>
+                    <h3 data-lang="de">Vollständiges Inventar & 3-Stufen Soft-Lockdown</h3>
+                    <h3 data-lang="en">Full App Inventory & 3-Stage Soft-Lockdown</h3>
+                    <p data-lang="de">Analysiert jede App auf Privilegien-Eskalation (<code>Application.ReadWrite.All</code>) und generiert kopierfertige PowerShell-Skripte mit <code>-WhatIf</code> Simulation und Live-Zustandsprüfung.</p>
+                    <p data-lang="en">Scores every app for privilege escalation paths (<code>Application.ReadWrite.All</code>) and generates ready-to-run PowerShell scripts with <code>-WhatIf</code> dry-run mode and live state verification.</p>
+                </div>
+            </div>
+
+            <div class="banner-showcase">
+                <img src="assets/appsentry-linkedin-banner.png" alt="Without Protection vs With AppSentry for M365">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <strong>AppSentry for M365</strong> • Open Source (MIT License) •
+                <a href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">Security & Compliance Pro</a> •
+                <a href="https://github.com/MKN1411/AppSentry-for-M365" target="_blank" rel="noopener">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleLang() {
+            const html = document.documentElement;
+            html.lang = html.lang === 'de' ? 'en' : 'de';
+        }
+    </script>
+</body>
+</html>

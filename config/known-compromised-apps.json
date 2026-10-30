@@ -1,0 +1,417 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "lastUpdated": "2026-10-30",
+    "description": "Known compromised vendor apps, BEC exfiltration tools, Traitorware / RogueApps, and abused Living-off-the-Land (LotL) Microsoft CLI app IDs (24-month threat focus)."
+  },
+  "compromisedApps": [
+    {
+      "appId": "506e08f9-6e9a-4da4-942b-a099a03644ae",
+      "name": "ConnectWise Cloud Backup (formerly SkyKick)",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Vendor Credential Compromise)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Kompromittiertes Hersteller-Credential (Storm-0940). Ermöglicht unautorisierten Zugriff auf Exchange, SharePoint, OneDrive, Teams und Verzeichnisdaten unter Umgehung von Benutzer-MFA.",
+      "descriptionEN": "Compromised vendor-managed credential (Storm-0940). Enables unauthorized access across Exchange, SharePoint, OneDrive, Teams, and directory data bypassing user MFA.",
+      "recommendationDE": "SOFORT-MASSNAHME: Per Soft-Lockdown (Stufe 1) deaktivieren, in Stufe 2 auf lokal injizierte Passwörter/Admin-Rollen prüfen und Entra Sign-In Logs auf verdächtige IPs untersuchen!",
+      "recommendationEN": "IMMEDIATE ACTION: Disable via Soft-Lockdown (Stage 1), check for locally injected passwords/admin roles in Stage 2, and audit Entra sign-in logs for suspicious IPs!",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" },
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" }
+      ]
+    },
+    {
+      "appId": "24205314-2b89-4e07-a2a4-579e898a5640",
+      "name": "ConnectWise Cloud Management - MS Teams",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Secondary Abuse & Privilege Escalation)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Sekundärer Missbrauch im Rahmen des ConnectWise-Vorfalls: Wurde genutzt, um sich selbst Global Administrator Rechte zuzuweisen und Backdoor-Secrets in andere Apps zu injizieren.",
+      "descriptionEN": "Secondary abuse in the ConnectWise incident: Used by threat actors to self-grant Global Administrator roles and inject backdoor secrets into other applications.",
+      "recommendationDE": "SOFORT-MASSNAHME: App deaktivieren (Stufe 1) und in Stufe 2 zwingend alle Entra Directory Admin-Rollen sowie lokale Client Secrets entziehen!",
+      "recommendationEN": "IMMEDIATE ACTION: Disable app (Stage 1) and immediately revoke all Entra Directory Admin Roles and local client secrets (Stage 2)!",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" },
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" }
+      ]
+    },
+    {
+      "appId": "2399d300-6fca-4e6a-a686-399fefe75b83",
+      "name": "ConnectWise Cloud Management (Base)",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Betroffene ConnectWise Cloud Management Basis-Applikations-ID gemäß Sicherheitswarnung Oktober 2026. Sofortige Deaktivierung ('Disable, Don't Delete') empfohlen.",
+      "descriptionEN": "Impacted ConnectWise Cloud Management base Application ID per October 2026 security advisory. Immediate disabling ('Disable, Don't Delete') recommended.",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1: accountEnabled = false) ausführen, bis Hersteller-Freigabe oder Migration abgeschlossen ist.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1: accountEnabled = false) until vendor clearance or migration is completed.",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" },
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" }
+      ]
+    },
+    {
+      "appId": "b78f6a77-d4e5-46fb-87e5-d1648bd02519",
+      "name": "ConnectWise Cloud Management - Exchange Online",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/",
+      "descriptionDE": "Betroffener ConnectWise Exchange Online Connector. Hohes Risiko für unautorisierten Postfachzugriff und Weiterleitungsregeln.",
+      "descriptionEN": "Impacted ConnectWise Exchange Online connector. High risk for unauthorized mailbox access and forwarding rules.",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1) ausführen und Exchange-Postfächer auf verdächtige Posteingangs-/Weiterleitungsregeln prüfen.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1) and audit Exchange mailboxes for suspicious inbox/forwarding rules.",
+      "references": [
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" },
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" }
+      ]
+    },
+    {
+      "appId": "b2b55f5b-7758-4719-8d8f-88ae172e6bdb",
+      "name": "ConnectWise Cloud Management - SharePoint Online",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/",
+      "descriptionDE": "Betroffener ConnectWise SharePoint Online Connector. Hohes Risiko für Datenexfiltration aus SharePoint und OneDrive.",
+      "descriptionEN": "Impacted ConnectWise SharePoint Online connector. High risk for data exfiltration from SharePoint and OneDrive.",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1) ausführen und Unified Audit Logs auf ungewöhnliche Datei-Downloads prüfen.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1) and check Unified Audit Logs for anomalous file downloads.",
+      "references": [
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" },
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" }
+      ]
+    },
+    {
+      "appId": "0de14c77-b9b0-4137-9360-34878a929827",
+      "name": "ConnectWise Cloud Management - MS Graph",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Betroffener ConnectWise Microsoft Graph Connector mit weitreichenden Verzeichnisberechtigungen.",
+      "descriptionEN": "Impacted ConnectWise Microsoft Graph connector holding broad directory permissions.",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1) ausführen und vergebene Graph AppRoleAssignments im Dossier prüfen.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1) and review granted Graph AppRoleAssignments in the dossier.",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" },
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" }
+      ]
+    },
+    {
+      "appId": "412dcf96-176d-4b3a-a1b0-4981ad66971e",
+      "name": "ConnectWise Cloud Management - Partner Center",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Betroffener ConnectWise Partner Center Connector (MSP/Multi-Tenant Risiko).",
+      "descriptionEN": "Impacted ConnectWise Partner Center connector (MSP/Multi-Tenant risk).",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1) ausführen und GDAP/Partner-Beziehungen prüfen.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1) and audit GDAP/Partner relationships.",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" }
+      ]
+    },
+    {
+      "appId": "c921256f-04a7-44e8-9b2a-69c33929ba19",
+      "name": "ConnectWise Legacy / Additional Management App",
+      "vendor": "ConnectWise / SkyKick",
+      "category": "VendorBreach",
+      "campaign": "Storm-0940 (Oct 2026 Supply Chain Advisory)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access",
+      "descriptionDE": "Weitere in den Sicherheitswarnungen zum ConnectWise/SkyKick-Vorfall gelistete Application ID.",
+      "descriptionEN": "Additional Application ID listed in security advisories regarding the ConnectWise/SkyKick incident.",
+      "recommendationDE": "SOFORT-MASSNAHME: Soft-Lockdown (Stufe 1) ausführen; bei Nichtgebrauch in Stufe 3 Berechtigungen dauerhaft entfernen.",
+      "recommendationEN": "IMMEDIATE ACTION: Execute Soft-Lockdown (Stage 1); if unused, permanently revoke permissions via Stage 3.",
+      "references": [
+        { "title": "Huntress Advisory (Storm-0940)", "url": "https://www.huntress.com/blog/vendor-credential-enables-unauthorized-access" }
+      ]
+    },
+    {
+      "appId": "ff8d92dc-3d82-41d6-bcbd-b9174d163620",
+      "name": "PerfectData Software (Email Backup Wizard)",
+      "vendor": "PerfectData Software",
+      "category": "MaliciousBEC",
+      "campaign": "BEC Mailbox PST Exfiltration (2024–2026 Top BEC IOC)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Bekanntestes BEC-Exfiltrationswerkzeug in M365-Sicherheitsvorfällen. Angreifer registrieren diese App nach AiTM-Phishing, um komplette Postfächer per EWS/Graph als PST-Datei herunterzuladen.",
+      "descriptionEN": "Most notorious BEC exfiltration tool in M365 incidents. Threat actors consent to this app after AiTM phishing to export entire cloud mailboxes to PST via EWS/Graph.",
+      "recommendationDE": "KRITISCHER BEC-ALARM: Sofort sperren (Stufe 1) und alle OAuth-Grants löschen (Stufe 3)! Betroffene Benutzerkonten auf Session-Diebstahl und Postfach-Exfiltration (MailItemsAccessed) untersuchen!",
+      "recommendationEN": "CRITICAL BEC ALERT: Immediately disable (Stage 1) and purge all OAuth grants (Stage 3)! Investigate consenting user accounts for session theft and mailbox exfiltration (MailItemsAccessed)!",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "CIPP Rogue Apps Documentation", "url": "https://docs.cipp.app/" },
+        { "title": "Microsoft Threat Intel: OAuth App Abuse", "url": "https://www.microsoft.com/en-us/security/blog/2023/12/12/threat-actors-misuse-oauth-applications-to-automate-financially-driven-attacks/" }
+      ]
+    },
+    {
+      "appId": "a245e8c0-b53c-4b67-9b45-751d1dff8e6b",
+      "name": "Newsletter Software Supermailer",
+      "vendor": "Supermailer",
+      "category": "MaliciousBEC",
+      "campaign": "BEC Mass-Phishing & Spam Distribution (2024–2026)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Massen-Newsletter-Software, die von Angreifern nach Kompromittierung eines M365-Kontos genutzt wird, um tausende Phishing-Mails im Namen des Unternehmens zu versenden.",
+      "descriptionEN": "Bulk newsletter tool leveraged by threat actors after M365 account compromise to blast thousands of phishing emails from legitimate corporate mailboxes.",
+      "recommendationDE": "SOFORT-MASSNAHME: App deaktivieren (Stufe 1) & Berechtigungen entziehen (Stufe 3). Ausgangspostfächer und versendete Elemente der zugewiesenen Benutzer prüfen!",
+      "recommendationEN": "IMMEDIATE ACTION: Disable app (Stage 1) & revoke permissions (Stage 3). Audit outbound mail logs and Sent Items of consenting users!",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "MaliciousOauthAppDetections GitHub", "url": "https://github.com/randomaccess3/detections" }
+      ]
+    },
+    {
+      "appId": "4761b959-9780-4c2d-87a3-512b4638f767",
+      "name": "rclone",
+      "vendor": "rclone.org",
+      "category": "ExfilTool",
+      "campaign": "Ransomware & Cloud Storage Mass Exfiltration (SharePoint/OneDrive)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Kommandozeilen-Synchronisationstool für Cloud-Speicher. Wird von Ransomware- und Extortion-Gruppen massiv missbraucht, um SharePoint- und OneDrive-Datenbestände automatisiert abzusaugen.",
+      "descriptionEN": "Command-line cloud storage sync program. Heavily abused by ransomware and extortion groups to rapidly exfiltrate SharePoint and OneDrive repositories.",
+      "recommendationDE": "HOCHRISIKO-EXFILTRATION: Sofern nicht explizit durch die IT freigegeben, sofort per Stufe 1 deaktivieren und in Stufe 3 alle Files/Sites-Berechtigungen entziehen!",
+      "recommendationEN": "HIGH-RISK EXFILTRATION: Unless explicitly authorized by IT, immediately disable via Stage 1 and revoke all Files/Sites permissions via Stage 3!",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "MaliciousOauthAppDetections GitHub", "url": "https://github.com/randomaccess3/detections" }
+      ]
+    },
+    {
+      "appId": "a43e5392-f48b-46a4-a0f1-098b5eeb4757",
+      "name": "CloudSponge",
+      "vendor": "CloudSponge",
+      "category": "ExfilTool",
+      "campaign": "Organizational Address Book & Contact Harvesting (BEC Recon)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Kontakt-Import-Dienst, der in BEC-Kampagnen missbraucht wird, um sämtliche Adressbücher und Kundenkontakte für nachfolgende Spear-Phishing-/CEO-Fraud-Angriffe zu exfiltrieren.",
+      "descriptionEN": "Contact import service abused in BEC campaigns to harvest organizational address books and customer contacts for subsequent spear-phishing and BEC fraud.",
+      "recommendationDE": "SOFORT PRÜFEN & SPERREN: App per Stufe 1 deaktivieren und in Stufe 3 alle Contacts.Read / Directory.Read-Grants widerrufen.",
+      "recommendationEN": "AUDIT & BLOCK IMMEDIATELY: Disable app via Stage 1 and revoke all Contacts.Read / Directory.Read grants via Stage 3.",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "CIPP Rogue Apps Documentation", "url": "https://docs.cipp.app/" }
+      ]
+    },
+    {
+      "appId": "caffae8c-0882-4c81-9a27-d1803af53a40",
+      "name": "SigParser",
+      "vendor": "SigParser",
+      "category": "ExfilTool",
+      "campaign": "Automated Mailbox & Signature Contact Extraction (RogueApp)",
+      "severity": "Red",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "E-Mail-Signatur- und Kontakt-Extraktor. Durchsucht Postfächer rückwirkend nach Telefonnummern, Titeln und Kommunikationspartnern und exportiert diese nach außen.",
+      "descriptionEN": "Email signature and contact intelligence extractor. Scans mailboxes historically for phone numbers, titles, and communication relationships to export externally.",
+      "recommendationDE": "SOFORT PRÜFEN & SPERREN: Wenn kein offizieller Unternehmensvertrag besteht, sofort per Stufe 1 sperren und OAuth-Grants in Stufe 3 löschen.",
+      "recommendationEN": "AUDIT & BLOCK IMMEDIATELY: If not officially contracted by the enterprise, disable via Stage 1 and purge OAuth grants in Stage 3.",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" }
+      ]
+    },
+    {
+      "appId": "e9a7fea1-1cc0-4cd9-a31b-9137ca5deedd",
+      "name": "eM Client",
+      "vendor": "eM Client Inc.",
+      "category": "Traitorware",
+      "campaign": "BEC Traitorware – Persistent Mailbox Sync & Exfiltration",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Legitimer Desktop-E-Mail-Client, der jedoch in zahlreichen BEC-Vorfällen als 'Traitorware' missbraucht wurde, um nach einem Phishing-Angriff dauerhaft und lautlos Postfächer am MFA vorbei zu synchronisieren.",
+      "descriptionEN": "Legitimate desktop email client frequently abused as 'traitorware' in BEC incidents to maintain silent, persistent mailbox synchronization bypassing user MFA.",
+      "recommendationDE": "AUTORISIERUNG PRÜFEN: Ist eM Client im Unternehmen offiziell erlaubt? Falls nein: Per Soft-Lockdown (Stufe 1) sperren. Falls für Einzelpersonen erlaubt: Zwingend Benutzerzuweisung (appRoleAssignmentRequired = true) aktivieren!",
+      "recommendationEN": "VERIFY AUTHORIZATION: Is eM Client officially sanctioned? If not: Disable via Soft-Lockdown (Stage 1). If allowed for specific users: Enforce user assignment (appRoleAssignmentRequired = true)!",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "T-Minus 365: Secure Third-Party Apps", "url": "https://tminus365.com/secure-third-party-applications-microsoft-365/" }
+      ]
+    },
+    {
+      "appId": "179d5108-412b-4c95-8e34-06786784ab39",
+      "name": "Postbox",
+      "vendor": "Postbox Inc.",
+      "category": "Traitorware",
+      "campaign": "BEC Traitorware – Unauthorized IMAP/Graph Mailbox Sync",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://github.com/randomaccess3/detections",
+      "descriptionDE": "Drittanbieter-Desktop-Mailclient mit voller IMAP/SMTP/Graph-Synchronisation. Wird in Incident-Response-Listen als häufig missbrauchter Persistenz-Client nach Kontoübernahmen geführt.",
+      "descriptionEN": "Third-party desktop mail client with full IMAP/SMTP/Graph sync. Tracked in incident response feeds as a commonly abused persistence client following account takeovers.",
+      "recommendationDE": "AUTORISIERUNG PRÜFEN: Bei fehlender IT-Freigabe sofort per Soft-Lockdown (Stufe 1) deaktivieren und OAuth2PermissionGrants prüfen.",
+      "recommendationEN": "VERIFY AUTHORIZATION: If not approved by IT, disable immediately via Soft-Lockdown (Stage 1) and review OAuth2PermissionGrants.",
+      "references": [
+        { "title": "MaliciousOauthAppDetections GitHub", "url": "https://github.com/randomaccess3/detections" },
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" }
+      ]
+    },
+    {
+      "appId": "946c777c-bc85-489e-b034-392389ae23d6",
+      "name": "Spike",
+      "vendor": "Spike (spikenow.com)",
+      "category": "Traitorware",
+      "campaign": "BEC Traitorware – Conversational Mail Sync & Exfiltration",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "Konversations-E-Mail-Client, der in den RogueApps-Listen von Huntress und CIPP geführt wird, da Angreifer ihn für unbemerkten Postfachzugriff und Phishing-Kampagnen einsetzen.",
+      "descriptionEN": "Conversational email client listed in Huntress and CIPP RogueApps feeds due to threat actor abuse for stealthy mailbox access and phishing.",
+      "recommendationDE": "AUTORISIERUNG PRÜFEN: In Unternehmensumgebungen fast immer unerwünscht (Schatten-IT oder BEC-Persistenz) -> Soft-Lockdown (Stufe 1) empfohlen.",
+      "recommendationEN": "VERIFY AUTHORIZATION: Rarely sanctioned in enterprise tenants (Shadow IT or BEC persistence) -> Soft-Lockdown (Stage 1) recommended.",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "CIPP Rogue Apps Documentation", "url": "https://docs.cipp.app/" }
+      ]
+    },
+    {
+      "appId": "62db40a4-2c7e-4373-a609-eda138798962",
+      "name": "Edison Mail",
+      "vendor": "Edison Software",
+      "category": "Traitorware",
+      "campaign": "BEC Traitorware – Cloud-Proxied Mailbox Sync",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://huntresslabs.github.io/rogueapps/",
+      "descriptionDE": "E-Mail-App mit Cloud-Synchronisation. Wird in M365-Sicherheitsanalysen überwacht, da E-Mail-Daten über externe Server synchronisiert werden und Angreifer sie als Persistenzkanal nutzen.",
+      "descriptionEN": "Cloud-synced email application monitored in M365 security audits because mailbox data syncs via external infrastructure and actors abuse it for persistence.",
+      "recommendationDE": "AUTORISIERUNG PRÜFEN: Aus Compliance- und Datenschutzgründen (NIS2/DSGVO) per Soft-Lockdown (Stufe 1) deaktivieren, sofern nicht explizit freigegeben.",
+      "recommendationEN": "VERIFY AUTHORIZATION: For compliance and data protection reasons (NIS2/GDPR), disable via Soft-Lockdown (Stage 1) unless explicitly approved.",
+      "references": [
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" },
+        { "title": "CIPP Rogue Apps Documentation", "url": "https://docs.cipp.app/" }
+      ]
+    },
+    {
+      "appId": "9e5f94bc-e8a4-4e73-b8be-63364c29d753",
+      "name": "Mozilla Thunderbird",
+      "vendor": "Mzla Technologies Corporation",
+      "category": "Traitorware",
+      "campaign": "Unauthorized Desktop IMAP/SMTP OAuth Sync (Shadow IT / BEC)",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://tminus365.com/secure-third-party-applications-microsoft-365/",
+      "descriptionDE": "Offizielle Mozilla Thunderbird OAuth2 Client-ID. Wird oft ohne Admin-Freigabe per User-Consent eingebunden, wird aber auch von Angreifern genutzt, um per IMAP.AccessAsUser.All komplette Postfächer lokal herunterzuladen.",
+      "descriptionEN": "Official Mozilla Thunderbird OAuth2 Client ID. Often added via user consent as Shadow IT, but also abused by attackers to download entire mailboxes via IMAP.AccessAsUser.All.",
+      "recommendationDE": "ZUWEISUNG EINSCHRÄNKEN: Falls Thunderbird nicht genutzt wird, per Stufe 1 deaktivieren. Falls für bestimmte User benötigt, zwingend 'appRoleAssignmentRequired = true' setzen!",
+      "recommendationEN": "RESTRICT ASSIGNMENT: If Thunderbird is not used, disable via Stage 1. If required for specific users, enforce 'appRoleAssignmentRequired = true'!",
+      "references": [
+        { "title": "T-Minus 365: Secure Third-Party Apps", "url": "https://tminus365.com/secure-third-party-applications-microsoft-365/" },
+        { "title": "Huntress RogueApps Watchlist", "url": "https://huntresslabs.github.io/rogueapps/" }
+      ]
+    },
+    {
+      "appId": "858d7e42-35f0-44b7-9033-df309239a47f",
+      "name": "ZoomInfo Login / Communitiez",
+      "vendor": "ZoomInfo",
+      "category": "Traitorware",
+      "campaign": "Contact & Address Book Sharing / Scraping Risk",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": false,
+      "referenceUrl": "https://github.com/randomaccess3/detections",
+      "descriptionDE": "Verknüpft Unternehmenskonten und Adressbücher mit externen B2B-Kontaktdatenbanken (Häufig per unbewusstem User-Consent aktiviert).",
+      "descriptionEN": "Links corporate accounts and address books with external B2B contact intelligence databases (frequently enabled via unintended user consent).",
+      "recommendationDE": "DATENSCHUTZ-PRÜFUNG: Prüfen, ob ein genehmigter Vertrag vorliegt. Andernfalls per Stufe 1 deaktivieren und Lese-Grants in Stufe 3 entfernen.",
+      "recommendationEN": "PRIVACY AUDIT: Verify if an approved contract exists. Otherwise disable via Stage 1 and revoke read grants in Stage 3.",
+      "references": [
+        { "title": "MaliciousOauthAppDetections GitHub", "url": "https://github.com/randomaccess3/detections" }
+      ]
+    },
+    {
+      "appId": "14d82eec-204b-4c2f-b7e8-296a70dab67e",
+      "name": "Microsoft Graph Command Line Tools",
+      "vendor": "Microsoft Corporation",
+      "category": "LotLAdminTool",
+      "campaign": "Living-off-the-Land (LotL) Graph PowerShell Abuse (Storm-0539 / Midnight Blizzard)",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": true,
+      "referenceUrl": "https://tminus365.com/secure-third-party-applications-microsoft-365/",
+      "descriptionDE": "Offizieller Service Principal des Microsoft Graph PowerShell SDKs. Angreifer nutzen diese vertrauenswürdige First-Party-App nach Phishing/Token-Diebstahl für Verzeichnis-Reconnaissance, Passwort-Injektion und Datenabfluss.",
+      "descriptionEN": "Official Service Principal of the Microsoft Graph PowerShell SDK. Threat actors abuse this trusted first-party app post-phishing for directory reconnaissance, password injection, and data exfiltration.",
+      "recommendationDE": "HÄRTUNGS-EMPFEHLUNG: Nicht blind löschen, wenn Admins das Graph SDK nutzen! Setzen Sie 'appRoleAssignmentRequired = true' (Benutzerzuweisung erforderlich), damit sich nur explizit zugewiesene Administratoren an der Graph PowerShell anmelden können, und entfernen Sie ungenutzte Hochrisiko-Scopes!",
+      "recommendationEN": "HARDENING RECOMMENDATION: Do not blindly delete if admins use the Graph SDK! Set 'appRoleAssignmentRequired = true' (User Assignment Required) so only explicitly assigned admins can sign into Graph PowerShell, and prune unused high-risk scopes!",
+      "references": [
+        { "title": "T-Minus 365: Hardening Third-Party & CLI Apps", "url": "https://tminus365.com/secure-third-party-applications-microsoft-365/" },
+        { "title": "CloudCapsule M365 Lockdown Guide", "url": "https://www.cloudcapsule.io/blog/vendor-app-compromise-microsoft-365-lockdown/" }
+      ]
+    },
+    {
+      "appId": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+      "name": "Microsoft Azure CLI",
+      "vendor": "Microsoft Corporation",
+      "category": "LotLAdminTool",
+      "campaign": "Living-off-the-Land (LotL) Azure CLI Recon & Token Replay (Storm-1283)",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": true,
+      "referenceUrl": "https://www.microsoft.com/en-us/security/blog/2023/12/12/threat-actors-misuse-oauth-applications-to-automate-financially-driven-attacks/",
+      "descriptionDE": "Offizielle Microsoft Azure CLI App-ID. Wird von Gruppen wie Storm-1283 und nach Device-Code-Phishing genutzt, um per Kommandozeile Ressourcen und Entra-Daten abzufragen.",
+      "descriptionEN": "Official Microsoft Azure CLI App ID. Frequently leveraged by groups like Storm-1283 and after device-code phishing to query Entra and Azure resources via CLI.",
+      "recommendationDE": "HÄRTUNGS-EMPFEHLUNG: Erzwingen Sie 'appRoleAssignmentRequired = true' für diesen Service Principal oder schützen Sie die App-ID per Conditional Access.",
+      "recommendationEN": "HARDENING RECOMMENDATION: Enforce 'appRoleAssignmentRequired = true' on this Service Principal or restrict the App ID via Conditional Access.",
+      "references": [
+        { "title": "Microsoft Threat Intel: OAuth & CLI Abuse", "url": "https://www.microsoft.com/en-us/security/blog/2023/12/12/threat-actors-misuse-oauth-applications-to-automate-financially-driven-attacks/" }
+      ]
+    },
+    {
+      "appId": "1950a258-227b-4e31-a9cf-717495945fc2",
+      "name": "Microsoft Azure PowerShell",
+      "vendor": "Microsoft Corporation",
+      "category": "LotLAdminTool",
+      "campaign": "Living-off-the-Land (LotL) Azure PowerShell Abuse",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": true,
+      "referenceUrl": "https://www.microsoft.com/en-us/security/blog/2023/12/12/threat-actors-misuse-oauth-applications-to-automate-financially-driven-attacks/",
+      "descriptionDE": "Offizielle Microsoft Azure PowerShell App-ID. Standardmäßig für alle Benutzer im Tenant offen, wodurch kompromittierte Standardbenutzer-Konten API-Abfragen ausführen können.",
+      "descriptionEN": "Official Microsoft Azure PowerShell App ID. Open to all tenant users by default, allowing compromised standard user accounts to run automated API queries.",
+      "recommendationDE": "HÄRTUNGS-EMPFEHLUNG: Setzen Sie 'appRoleAssignmentRequired = true', damit nur berechtigte Administratoren Azure PowerShell nutzen können.",
+      "recommendationEN": "HARDENING RECOMMENDATION: Set 'appRoleAssignmentRequired = true' so only authorized administrators can use Azure PowerShell.",
+      "references": [
+        { "title": "Microsoft Threat Intel: OAuth & CLI Abuse", "url": "https://www.microsoft.com/en-us/security/blog/2023/12/12/threat-actors-misuse-oauth-applications-to-automate-financially-driven-attacks/" }
+      ]
+    },
+    {
+      "appId": "de8bc8b5-d9f9-48b1-a8ad-b748da725064",
+      "name": "Graph Explorer",
+      "vendor": "Microsoft Corporation",
+      "category": "LotLAdminTool",
+      "campaign": "Living-off-the-Land (LotL) Interactive Graph Reconnaissance",
+      "severity": "Orange",
+      "onlyWhenOpenAssignment": true,
+      "referenceUrl": "https://tminus365.com/secure-third-party-applications-microsoft-365/",
+      "descriptionDE": "Microsofts offizielles Web-Entwicklerwerkzeug Graph Explorer. Wird von Angreifern nach Session-Hijacking genutzt, um bequem im Browser Graph-Abfragen durchzuführen.",
+      "descriptionEN": "Microsoft's official web developer utility Graph Explorer. Used by threat actors after session hijacking to interactively browse and exfiltrate Graph data.",
+      "recommendationDE": "HÄRTUNGS-EMPFEHLUNG: Setzen Sie 'appRoleAssignmentRequired = true' (oder deaktivieren Sie den Service Principal per Stufe 1, falls keine Entwickler Graph Explorer im Tenant benötigen).",
+      "recommendationEN": "HARDENING RECOMMENDATION: Set 'appRoleAssignmentRequired = true' (or disable the Service Principal via Stage 1 if no developers require Graph Explorer in this tenant).",
+      "references": [
+        { "title": "T-Minus 365: Hardening Third-Party Apps", "url": "https://tminus365.com/secure-third-party-applications-microsoft-365/" }
+      ]
+    }
+  ]
+}

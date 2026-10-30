@@ -1,0 +1,9 @@
+# Ignore local tenant assessment outputs and downloaded remediation scripts
+output/
+*.html
+!templates/report-template.html
+!website/index.html
+AppSentry_Lockdown_*.ps1
+M365AppGuard_Lockdown_*.ps1
+.DS_Store
+Thumbs.db

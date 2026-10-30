@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppSentry for M365 | Entra ID App & Supply-Chain Security Report</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #131b2e;
+            --bg-row-hover: #1b2640;
+            --border: #26334d;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --red-bg: rgba(239, 68, 68, 0.16);
+            --red-border: #ef4444;
+            --red-text: #fca5a5;
+            --orange-bg: rgba(245, 158, 11, 0.16);
+            --orange-border: #f59e0b;
+            --orange-text: #fcd34d;
+            --green-bg: rgba(16, 185, 129, 0.16);
+            --green-border: #10b981;
+            --green-text: #6ee7b7;
+            --accent: #38bdf8;
+            --lockdown-btn: #dc2626;
+            --lockdown-btn-hover: #b91c1c;
+            --policy-btn: #2563eb;
+            --policy-btn-hover: #1d4ed8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.45;
+            padding: 18px;
+        }
+        .container { max-width: 100%; margin: 0 auto; }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: linear-gradient(135deg, #131b2e 0%, #1e293b 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .title-group h1 { font-size: 1.5rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .title-group p { color: var(--text-muted); font-size: 0.88rem; margin-top: 4px; }
+        .meta-bar { display: flex; gap: 12px; margin-top: 10px; font-size: 0.8rem; color: var(--accent); flex-wrap: wrap; }
+        .meta-chip { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 3px 9px; border-radius: 6px; }
+        .lang-switch {
+            display: flex;
+            gap: 6px;
+            background: #0b0f19;
+            padding: 5px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .lang-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .lang-btn.active { background: var(--accent); color: #0f172a; }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .kpi-card.red { border-left: 5px solid var(--red-border); }
+        .kpi-card.orange { border-left: 5px solid var(--orange-border); }
+        .kpi-card.green { border-left: 5px solid var(--green-border); }
+        .kpi-label { font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+        .kpi-value { font-size: 1.75rem; font-weight: 800; margin-top: 4px; }
+        .kpi-card.red .kpi-value { color: var(--red-text); }
+        .kpi-card.orange .kpi-value { color: var(--orange-text); }
+        .kpi-card.green .kpi-value { color: var(--green-text); }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 24px;
+        }
+        .section-card.threat-focus-card {
+            border: 2px solid var(--red-border);
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.08) 0%, #131b2e 55%);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.16);
+        }
+        .rec-box {
+            background: rgba(245, 158, 11, 0.11);
+            border-left: 3px solid var(--orange-border);
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            color: #fef3c7;
+            line-height: 1.38;
+        }
+        .rec-box.Red {
+            background: rgba(239, 68, 68, 0.14);
+            border-left-color: var(--red-border);
+            color: #fee2e2;
+        }
+        .rec-box.Green {
+            background: rgba(16, 185, 129, 0.12);
+            border-left-color: var(--green-border);
+            color: #d1fae5;
+        }
+        .ref-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .ref-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+        .ref-link:hover {
+            background: rgba(56, 189, 248, 0.25);
+            text-decoration: underline;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-header h2 { font-size: 1.15rem; color: #fff; }
+        .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .filter-btn {
+            background: #0b0f19;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .filter-btn.active { border-color: var(--accent); background: rgba(56, 189, 248, 0.15); color: var(--accent); }
+        .search-input {
+            background: #0b0f19;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 7px 12px;
+            border-radius: 6px;
+            min-width: 260px;
+            font-size: 0.82rem;
+        }
+
+        /* Compact Table & Sticky Action Column */
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            table-layout: auto;
+        }
+        th {
+            text-align: left;
+            padding: 9px 8px;
+            background: #0f172a;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.77rem;
+        }
+        td {
+            padding: 8px 8px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        tr.clickable-row { cursor: pointer; }
+        tr:hover td { background-color: var(--bg-row-hover); }
+
+        th.sticky-action, td.sticky-action {
+            position: sticky;
+            right: 0;
+            background: #0f172a;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.45);
+            z-index: 5;
+            text-align: right;
+            white-space: nowrap;
+        }
+        tr:hover td.sticky-action { background: #1b2640; }
+
+        .app-title-link {
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .app-title-link:hover { text-decoration: underline; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            line-height: 1.25;
+            max-width: 220px;
+            word-break: break-word;
+        }
+        .badge.Red { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red-text); }
+        .badge.Orange { background: var(--orange-bg); border: 1px solid var(--orange-border); color: var(--orange-text); }
+        .badge.Green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green-text); }
+
+        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .dot.Red { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+        .dot.Orange { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+        .dot.Green { background: #10b981; }
+
+        .action-group { display: inline-flex; gap: 6px; align-items: center; }
+        .details-btn {
+            background: #1e293b;
+            color: var(--accent);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .details-btn:hover { background: rgba(56, 189, 248, 0.2); }
+
+        .lockdown-btn {
+            background: var(--lockdown-btn);
+            color: #fff;
+            border: 1px solid #f87171;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.76rem;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.1s, background 0.15s;
+        }
+        .lockdown-btn:hover { background: var(--lockdown-btn-hover); transform: translateY(-1px); }
+        .lockdown-btn.Green {
+            background: #1e293b;
+            border-color: #475569;
+            color: #cbd5e1;
+        }
+        .lockdown-btn.Green:hover { background: #334155; }
+
+        .policy-btn {
+            background: var(--policy-btn);
+            color: #fff;
+            border: 1px solid #60a5fa;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.76rem;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .policy-btn:hover { background: var(--policy-btn-hover); }
+        .policy-btn.Green {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--green-border);
+            color: var(--green-text);
+        }
+
+        .sub-text { display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; font-family: Consolas, monospace; }
+        .compliance-tag {
+            display: inline-block;
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            color: #cbd5e1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.71rem;
+        }
+
+        /* Collapsible Group Accordions */
+        details.group-box {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 14px;
+            background: #0f172a;
+            overflow: hidden;
+        }
+        details.group-box.Red { border-left: 5px solid var(--red-border); }
+        details.group-box.Orange { border-left: 5px solid var(--orange-border); }
+        details.group-box.Green { border-left: 5px solid var(--green-border); }
+        summary.group-summary {
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        summary.group-summary:hover { background: rgba(255, 255, 255, 0.05); }
+        .group-count {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* Dossier & Lockdown Modal */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal {
+            background: #0f172a;
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            max-width: 1120px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+        .modal-header h3 { font-size: 1.2rem; color: #fff; }
+        .modal-header-actions { display: flex; gap: 10px; align-items: center; }
+        .print-btn {
+            background: #0284c7;
+            color: #fff;
+            border: 1px solid #38bdf8;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .print-btn:hover { background: #0369a1; }
+        .close-btn { background: transparent; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; line-height: 1; }
+        .readonly-banner {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            margin-bottom: 14px;
+            color: #e0f2fe;
+        }
+
+        /* Dossier Structured Cards */
+        .main-tabs { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .main-tab-btn {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.84rem;
+        }
+        .main-tab-btn.active { background: var(--accent); color: #0f172a; border-color: var(--accent); }
+
+        .dossier-section {
+            background: #131b2e;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+        }
+        .dossier-section h4 {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 6px;
+        }
+        .kv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            font-size: 0.82rem;
+        }
+        .kv-item { background: #0b0f19; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); }
+        .kv-label { display: block; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
+        .kv-val { font-weight: 600; color: #fff; font-family: Consolas, monospace; word-break: break-all; }
+
+        .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .perm-card {
+            background: #0b0f19;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            flex: 1 1 280px;
+        }
+        .perm-card.Red { border-left: 4px solid var(--red-border); }
+        .perm-card.Orange { border-left: 4px solid var(--orange-border); }
+        .perm-card.Green { border-left: 4px solid var(--green-border); }
+
+        .reasons-list { margin-bottom: 6px; padding-left: 20px; font-size: 0.84rem; color: #fca5a5; }
+        .reasons-list li { margin-bottom: 5px; }
+        .stage-selector-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .stage-btn {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex: 1 1 260px;
+            text-align: left;
+            transition: all 0.15s;
+        }
+        .stage-btn.active.stage-1 { background: rgba(16, 185, 129, 0.2); border-color: var(--green-border); color: var(--green-text); }
+        .stage-btn.active.stage-2 { background: rgba(245, 158, 11, 0.2); border-color: var(--orange-border); color: var(--orange-text); }
+        .stage-btn.active.stage-3 { background: rgba(239, 68, 68, 0.22); border-color: var(--red-border); color: var(--red-text); }
+        .stage-desc-banner {
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--green-border);
+            background: rgba(16, 185, 129, 0.08);
+            color: #d1fae5;
+        }
+        .stage-desc-banner.stage-2 {
+            border-left-color: var(--orange-border);
+            background: rgba(245, 158, 11, 0.08);
+            color: #fef3c7;
+        }
+        .stage-desc-banner.stage-3 {
+            border-left-color: var(--red-border);
+            background: rgba(239, 68, 68, 0.1);
+            color: #fee2e2;
+        }
+        .tab-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .tab-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .tab-btn {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+        .tab-btn.active { background: var(--accent); color: #0f172a; border-color: var(--accent); }
+        .whatif-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #131b2e;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .whatif-toggle input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
+        .code-box {
+            position: relative;
+            background: #020617;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 44px 14px 14px 14px;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: #38bdf8;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .code-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 8px;
+        }
+        .copy-btn, .download-btn {
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+        .download-btn {
+            background: #0284c7;
+            border-color: #38bdf8;
+        }
+        .copy-btn:hover, .download-btn:hover { background: var(--accent); color: #0f172a; }
+
+        /* Print / Save as PDF Styles (Actanex / Evidiens Audit Evidence Sheet) */
+        @media print {
+            body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+            .container { display: none !important; }
+            .modal-backdrop {
+                position: static !important;
+                display: block !important;
+                background: #fff !important;
+                padding: 0 !important;
+            }
+            .modal {
+                max-width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                background: #fff !important;
+                color: #000 !important;
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                padding: 16px !important;
+            }
+            .modal-header h3, .dossier-section h4, .kv-val { color: #000 !important; }
+            .dossier-section, .kv-item, .perm-card {
+                background: #f8fafc !important;
+                color: #000 !important;
+                border: 1px solid #94a3b8 !important;
+                page-break-inside: avoid;
+            }
+            .reasons-list { color: #991b1b !important; }
+            .code-box {
+                background: #f1f5f9 !important;
+                color: #0f172a !important;
+                border: 1px solid #64748b !important;
+            }
+            .print-btn, .close-btn, .copy-btn, .main-tabs { display: none !important; }
+            #pane-dossier, #pane-lockdown { display: block !important; margin-top: 12px !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="title-group">
+            <h1>
+                <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                    <path d="M32 4L8 14V31C8 46.5 18.2 59.3 32 63C45.8 59.3 56 46.5 56 31V14L32 4Z" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+                    <rect x="19" y="22" width="26" height="20" rx="7" fill="#e2e8f0" stroke="#38bdf8" stroke-width="2"/>
+                    <rect x="22" y="25" width="20" height="13" rx="4" fill="#020617"/>
+                    <ellipse cx="27.5" cy="30.5" rx="2.2" ry="2.8" fill="#38bdf8"/>
+                    <ellipse cx="36.5" cy="30.5" rx="2.2" ry="2.8" fill="#38bdf8"/>
+                    <path d="M28.5 35C30 36.8 34 36.8 35.5 35" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="41" y1="22" x2="45" y2="15" stroke="#94a3b8" stroke-width="2.2"/>
+                    <circle cx="45.5" cy="14" r="2.8" fill="#10b981"/>
+                </svg>
+                <span id="lbl-title">AppSentry for M365</span>
+            </h1>
+            <p id="lbl-subtitle"></p>
+            <div class="meta-bar">
+                <span class="meta-chip" id="meta-tenant"></span>
+                <span class="meta-chip" id="meta-time"></span>
+                <span class="meta-chip">🔒 Mode: 100% Read-Only | App Dossier + PDF Export | Lockdown Playbooks</span>
+            </div>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn" id="btn-lang-de" onclick="setLanguage('DE')">🇩🇪 DE</button>
+            <button class="lang-btn" id="btn-lang-en" onclick="setLanguage('EN')">🇬🇧 EN</button>
+        </div>
+    </header>
+
+    <!-- KPI Summary Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card red">
+            <span class="kpi-label" id="kpi-lbl-pol-red">Tenant Policies (Rot)</span>
+            <span class="kpi-value" id="kpi-val-pol-red">0</span>
+        </div>
+        <div class="kpi-card red">
+            <span class="kpi-label" id="kpi-lbl-app-red">Kritische Apps (Rot)</span>
+            <span class="kpi-value" id="kpi-val-app-red">0</span>
+        </div>
+        <div class="kpi-card red">
+            <span class="kpi-label" id="kpi-lbl-ioc">Aktive IOC-Treffer (Vendor Breach)</span>
+            <span class="kpi-value" id="kpi-val-ioc">0</span>
+        </div>
+        <div class="kpi-card orange">
+            <span class="kpi-label" id="kpi-lbl-esc">Apps mit Passwort-/Rollen-Macht</span>
+            <span class="kpi-value" id="kpi-val-esc">0</span>
+        </div>
+        <div class="kpi-card orange">
+            <span class="kpi-label" id="kpi-lbl-app-orange">Warnungen (Orange)</span>
+            <span class="kpi-value" id="kpi-val-app-orange">0</span>
+        </div>
+        <div class="kpi-card green">
+            <span class="kpi-label" id="kpi-lbl-app-green">Gehärtete Apps (Grün)</span>
+            <span class="kpi-value" id="kpi-val-app-green">0</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: Global Tenant App Protection Policies (T-01 to T-14) -->
+    <section class="section-card">
+        <div class="section-header">
+            <h2 id="lbl-sec-tenant">1. Globale Tenant App-Schutzeinstellungen</h2>
+            <div class="toolbar">
+                <button class="filter-btn active" onclick="setPolicyFilter('ALL', this)" id="btn-pol-all">Alle</button>
+                <button class="filter-btn" onclick="setPolicyFilter('Red', this)">🔴 Rot</button>
+                <button class="filter-btn" onclick="setPolicyFilter('Orange', this)">🟠 Orange</button>
+                <button class="filter-btn" onclick="setPolicyFilter('Green', this)">🟢 Grün</button>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th id="th-pol-id" style="width:48px;">ID</th>
+                        <th id="th-pol-status" style="width:110px;">Status</th>
+                        <th id="th-pol-name" style="width:28%;">Tenant-Einstellung</th>
+                        <th id="th-pol-curr" style="width:24%;">Aktueller Wert (Ist)</th>
+                        <th id="th-pol-rec" style="width:22%;">Empfehlung (Soll)</th>
+                        <th id="th-pol-comp">Regulatorik</th>
+                        <th id="th-pol-act" class="sticky-action">Aktion</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-policies"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Prominent Threat Focus & Known Risk Apps (24-Month Watchlist) -->
+    <section class="section-card threat-focus-card" id="section-threat-focus">
+        <div class="section-header">
+            <div>
+                <h2 id="lbl-sec-threat">2. 🚨 Aktiver Angriffsfokus &amp; Bekannte Risiko-Apps</h2>
+                <span class="sub-text" id="lbl-sub-threat" style="font-family:inherit; font-size:0.82rem; margin-top:4px;"></span>
+            </div>
+            <span class="group-count" id="threat-focus-count">0 Apps</span>
+        </div>
+        <div id="threat-focus-container"></div>
+    </section>
+
+    <!-- SECTION 3: Enterprise Apps & App Registrations Inventory (All Apps incl. Block 2) -->
+    <section class="section-card">
+        <div class="section-header">
+            <h2 id="lbl-sec-apps">3. Vollständiges App-Inventar &amp; Allgemeine Gefahrenanalyse</h2>
+            <div class="toolbar">
+                <input type="text" class="search-input" id="app-search" oninput="renderTables()" placeholder="Search...">
+                <button class="filter-btn active" id="btn-view-group" onclick="setGroupingMode(true)"></button>
+                <button class="filter-btn" id="btn-view-flat" onclick="setGroupingMode(false)"></button>
+                <button class="filter-btn active" onclick="setAppFilter('ALL', this)" id="btn-app-all">Alle</button>
+                <button class="filter-btn" onclick="setAppFilter('Red', this)">🔴 Rot</button>
+                <button class="filter-btn" onclick="setAppFilter('Orange', this)">🟠 Orange</button>
+                <button class="filter-btn" onclick="setAppFilter('Green', this)">🟢 Grün</button>
+            </div>
+        </div>
+        <div id="apps-container"></div>
+    </section>
+</div>
+
+<!-- Structured Dossier + PDF Print + Lockdown Playbook Modal -->
+<div class="modal-backdrop" id="lockdown-modal" onclick="if(event.target===this) closeModal()">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modal-title">🛡️ Dossier & Playbook</h3>
+            <div class="modal-header-actions">
+                <button class="print-btn" id="btn-print-pdf" onclick="openPrintPreviewTab()">🖨️ Als PDF drucken</button>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+        </div>
+        <div class="readonly-banner" id="modal-readonly-note"></div>
+
+        <!-- Top-level View Switcher inside Modal (Dossier vs Lockdown Commands) -->
+        <div class="main-tabs" id="modal-main-tabs">
+            <button class="main-tab-btn active" id="btn-tab-dossier" onclick="switchModalView('DOSSIER')"></button>
+            <button class="main-tab-btn" id="btn-tab-lockdown" onclick="switchModalView('LOCKDOWN')"></button>
+        </div>
+
+        <!-- PANE 1: Structured Unabbreviated App / Policy Dossier -->
+        <div id="pane-dossier"></div>
+
+        <!-- PANE 2: PowerShell SDK & Graph REST Lockdown Commands -->
+        <div id="pane-lockdown" style="display:none;">
+            <!-- 3-Stage Escalation Selector (Visible for Enterprise Apps) -->
+            <div id="stage-selector-container" style="display:none;">
+                <div class="stage-selector-bar">
+                    <button class="stage-btn stage-1 active" id="btn-stage-1" onclick="switchLockdownStage(1)"></button>
+                    <button class="stage-btn stage-2" id="btn-stage-2" onclick="switchLockdownStage(2)"></button>
+                    <button class="stage-btn stage-3" id="btn-stage-3" onclick="switchLockdownStage(3)"></button>
+                </div>
+                <div class="stage-desc-banner stage-1" id="stage-desc-box"></div>
+            </div>
+
+            <div class="tab-bar">
+                <div class="tab-group">
+                    <button class="tab-btn active" id="tab-sdk" onclick="switchCodeTab('SDK')">PowerShell (Microsoft.Graph SDK)</button>
+                    <button class="tab-btn" id="tab-rest" onclick="switchCodeTab('REST')">Graph REST API (Invoke-MgGraphRequest)</button>
+                </div>
+                <label class="whatif-toggle">
+                    <input type="checkbox" id="chk-whatif" checked onchange="refreshCodeBox()">
+                    <span id="lbl-whatif-toggle">-WhatIf Schutz aktiv</span>
+                </label>
+            </div>
+            <div class="code-box">
+                <div class="code-actions">
+                    <button class="download-btn" id="btn-download-ps1" onclick="downloadLockdownScript('ps1')">💾 Als .ps1 herunterladen</button>
+                    <button class="copy-btn" id="btn-download-txt" onclick="downloadLockdownScript('txt')">📄 Als .txt herunterladen</button>
+                    <button class="copy-btn" id="btn-copy" onclick="copyLockdownCode()">Kopieren</button>
+                </div>
+                <pre id="modal-code"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const REPORT_DATA = __REPORT_JSON_PLACEHOLDER__;
+    const I18N_DATA   = __I18N_JSON_PLACEHOLDER__;
+    let currentLang   = "__DEFAULT_LANG_PLACEHOLDER__";
+    let policyFilter  = "ALL";
+    let appFilter     = "ALL";
+    let groupedMode   = true;
+    let activeModalItem = null;
+    let activeCodeMode  = "SDK";
+    let activeModalView = "DOSSIER";
+    let activeStage     = 1;
+
+    function escHtml(str) {
+        if (!str) return "";
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.getElementById('btn-lang-de').classList.toggle('active', lang === 'DE');
+        document.getElementById('btn-lang-en').classList.toggle('active', lang === 'EN');
+        renderTables();
+    }
+
+    function setGroupingMode(isGrouped) {
+        groupedMode = isGrouped;
+        document.getElementById('btn-view-group').classList.toggle('active', isGrouped);
+        document.getElementById('btn-view-flat').classList.toggle('active', !isGrouped);
+        renderTables();
+    }
+
+    function setPolicyFilter(flt, btn) {
+        policyFilter = flt;
+        btn.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTables();
+    }
+
+    function setAppFilter(flt, btn) {
+        appFilter = flt;
+        btn.parentElement.querySelectorAll('.filter-btn').forEach(b => {
+            if (b.id !== 'btn-view-group' && b.id !== 'btn-view-flat') b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        renderTables();
+    }
+
+    function badgeHtml(color, text) {
+        return `<span class="badge ${color}"><span class="dot ${color}"></span>${escHtml(text)}</span>`;
+    }
+
+    function buildAppTableHtml(itemsWithIdx, t) {
+        let rowsHtml = '';
+        itemsWithIdx.forEach(entry => {
+            const app = entry.app;
+            const idx = entry.idx;
+            const statusLbl = app.OverallColor === 'Red' ? t.StatusRed : (app.OverallColor === 'Orange' ? t.StatusOrange : t.StatusGreen);
+            const iocTxt  = currentLang === 'DE' ? app.IocBadgeDE : app.IocBadgeEN;
+            const escTxt  = currentLang === 'DE' ? app.EscBadgeDE : app.EscBadgeEN;
+            const roleTxt = currentLang === 'DE' ? app.RoleBadgeDE : app.RoleBadgeEN;
+            const permTxt = currentLang === 'DE' ? app.PermBadgeDE : app.PermBadgeEN;
+            const credTxt = currentLang === 'DE' ? app.CredBadgeDE : app.CredBadgeEN;
+            const govTxt  = currentLang === 'DE' ? app.GovBadgeDE : app.GovBadgeEN;
+            const modTxt  = currentLang === 'DE' ? (app.LastModifiedDE || '') : (app.LastModifiedEN || '');
+
+            rowsHtml += `
+                <tr class="clickable-row" onclick="openAppModal(${idx}, 'DOSSIER')">
+                    <td>${badgeHtml(app.OverallColor, statusLbl)}</td>
+                    <td>
+                        <span class="app-title-link">🔍 ${escHtml(app.DisplayName)}</span>
+                        <span class="sub-text">${escHtml(app.AppId)}</span>
+                        <span class="sub-text">${escHtml(app.PublisherName)}</span>
+                        ${modTxt ? `<span class="sub-text" style="color:var(--accent);">🕒 ${escHtml(modTxt)}</span>` : ''}
+                    </td>
+                    <td>${badgeHtml(app.IocColor, iocTxt)}</td>
+                    <td>${badgeHtml(app.EscColor, escTxt)}</td>
+                    <td>${badgeHtml(app.RoleColor, roleTxt)}</td>
+                    <td>${badgeHtml(app.PermColor, permTxt)}</td>
+                    <td>${badgeHtml(app.CredColor, credTxt)}</td>
+                    <td>${badgeHtml(app.GovColor, govTxt)}</td>
+                    <td class="sticky-action" onclick="event.stopPropagation()">
+                        <div class="action-group">
+                            <button class="details-btn" onclick="openAppModal(${idx}, 'DOSSIER')">${escHtml(t.DossierBtn)}</button>
+                            <button class="lockdown-btn ${app.OverallColor}" onclick="openAppModal(${idx}, 'LOCKDOWN')">${escHtml(t.LockdownBtn)}</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        return `
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:95px;">${escHtml(t.ColRiskStatus)}</th>
+                            <th style="min-width:190px;">${escHtml(t.ColAppName)}</th>
+                            <th>${escHtml(t.ColIocStatus)}</th>
+                            <th>${escHtml(t.ColEscalation)}</th>
+                            <th>${escHtml(t.ColDirectoryRoles)}</th>
+                            <th>${escHtml(t.ColPermissions)}</th>
+                            <th>${escHtml(t.ColCredentials)}</th>
+                            <th>${escHtml(t.ColGovernance)}</th>
+                            <th class="sticky-action">${escHtml(t.ColAction)}</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderTables() {
+        const t = I18N_DATA[currentLang];
+        const s = REPORT_DATA.Summary;
+        const totalPolCount = REPORT_DATA.TenantPolicies.length;
+
+        document.getElementById('lbl-title').textContent = t.AppTitle;
+        document.getElementById('lbl-subtitle').textContent = t.SubTitle;
+        document.getElementById('meta-tenant').textContent = `🏢 Tenant: ${s.TenantName} (${s.TenantId})`;
+        document.getElementById('meta-time').textContent = `🕒 Scan: ${s.ScanTimestampUtc}`;
+
+        document.getElementById('btn-view-group').textContent = t.GroupModeBtn;
+        document.getElementById('btn-view-flat').textContent = t.FlatModeBtn;
+
+        document.getElementById('kpi-lbl-pol-red').textContent = currentLang === 'DE' ? 'Tenant-Policies (Rot)' : 'Tenant Policies (Red)';
+        document.getElementById('kpi-val-pol-red').textContent = `${s.TenantPoliciesRed} / ${totalPolCount}`;
+        document.getElementById('kpi-lbl-app-red').textContent = currentLang === 'DE' ? 'Kritische Apps (Rot)' : 'Critical Apps (Red)';
+        document.getElementById('kpi-val-app-red').textContent = s.AppsRed;
+        document.getElementById('kpi-lbl-ioc').textContent = currentLang === 'DE' ? 'Aktive IOC-Treffer (Breach)' : 'Active IOC Matches (Breach)';
+        document.getElementById('kpi-val-ioc').textContent = s.ActiveIocMatches;
+        document.getElementById('kpi-lbl-esc').textContent = currentLang === 'DE' ? 'Apps mit Passwort-/Rollen-Recht' : 'Apps Can Add Passwords/Roles';
+        document.getElementById('kpi-val-esc').textContent = s.AppsCanAddPasswords;
+        document.getElementById('kpi-lbl-app-orange').textContent = currentLang === 'DE' ? 'Warnungen (Orange)' : 'Warnings (Orange)';
+        document.getElementById('kpi-val-app-orange').textContent = s.AppsOrange;
+        document.getElementById('kpi-lbl-app-green').textContent = currentLang === 'DE' ? 'Sichere Apps (Grün)' : 'Secure Apps (Green)';
+        document.getElementById('kpi-val-app-green').textContent = s.AppsGreen;
+
+        document.getElementById('lbl-sec-tenant').textContent = t.SectionTenantPolicies;
+        document.getElementById('lbl-sec-threat').textContent = t.SectionThreatFocus;
+        document.getElementById('lbl-sub-threat').textContent = t.ThreatFocusSub;
+        document.getElementById('lbl-sec-apps').textContent = t.SectionAppInventory;
+        document.getElementById('app-search').placeholder = t.SearchPlaceholder;
+
+        // Render Block 2: Prominent Threat Intelligence & Complete 24-Month Watchlist Audit (Found vs. Not Found)
+        const watchlist = REPORT_DATA.ThreatWatchlist || [];
+        const foundWatchlist = watchlist.filter(w => w.FoundInTenant);
+        const notFoundWatchlist = watchlist.filter(w => !w.FoundInTenant);
+
+        foundWatchlist.sort((a, b) => {
+            const rank = c => (c === 'Red' ? 0 : (c === 'Orange' ? 1 : 2));
+            return rank(a.StatusColor) - rank(b.StatusColor);
+        });
+
+        document.getElementById('threat-focus-count').textContent = `${foundWatchlist.length} / ${watchlist.length} Apps (${currentLang === 'DE' ? 'Gefunden / Geprüft' : 'Found / Checked'})`;
+
+        function buildWatchlistTableHtml(list) {
+            let rows = '';
+            list.forEach(item => {
+                const sevColor = item.FoundInTenant ? item.StatusColor : 'Green';
+                const stateLbl = currentLang === 'DE' ? item.StateBadgeDE : item.StateBadgeEN;
+                const descTxt  = currentLang === 'DE' ? item.ThreatDescriptionDE : item.ThreatDescriptionEN;
+                const recTxt   = currentLang === 'DE' ? item.RecommendationDE : item.RecommendationEN;
+                const refs     = item.ThreatReferences || [];
+                const refsHtml = refs.length === 0
+                    ? `<span class="sub-text">-</span>`
+                    : `<div class="ref-list">` + refs.map(r => `<a class="ref-link" href="${escHtml(r.url)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">🔗 ${escHtml(r.title)}</a>`).join('') + `</div>`;
+
+                const rowClick = (item.FoundInTenant && item.AppIndex >= 0) ? `class="clickable-row" onclick="openAppModal(${item.AppIndex}, 'DOSSIER')"` : '';
+                const nameHtml = (item.FoundInTenant && item.AppIndex >= 0)
+                    ? `<span class="app-title-link">🔍 ${escHtml(item.DisplayName)}</span>`
+                    : `<strong>${escHtml(item.DisplayName)}</strong>`;
+                const modWtxt = item.FoundInTenant ? (currentLang === 'DE' ? (item.LastModifiedDE || '') : (item.LastModifiedEN || '')) : '';
+
+                const actionHtml = (item.FoundInTenant && item.AppIndex >= 0)
+                    ? `<div class="action-group">
+                           <button class="details-btn" onclick="openAppModal(${item.AppIndex}, 'DOSSIER')">${escHtml(t.DossierBtn)}</button>
+                           <button class="lockdown-btn ${item.OverallColor}" onclick="openAppModal(${item.AppIndex}, 'LOCKDOWN')">${escHtml(t.LockdownBtn)}</button>
+                       </div>`
+                    : `<span class="badge Green"><span class="dot Green"></span>${currentLang === 'DE' ? '✔ Nicht vorhanden' : '✔ Not Present'}</span>`;
+
+                rows += `
+                    <tr ${rowClick}>
+                        <td>
+                            ${badgeHtml(sevColor, stateLbl)}
+                            <span class="sub-text" style="margin-top:4px; font-weight:700;">${escHtml(item.ThreatCategory)}</span>
+                        </td>
+                        <td>
+                            ${nameHtml}
+                            <span class="sub-text">${escHtml(item.AppId)}</span>
+                            <span class="sub-text">${escHtml(item.Vendor)}</span>
+                            ${modWtxt ? `<span class="sub-text" style="color:var(--accent);">🕒 ${escHtml(modWtxt)}</span>` : ''}
+                        </td>
+                        <td>
+                            <strong>${escHtml(item.ThreatCampaign)}</strong>
+                            <span class="sub-text" style="font-family:inherit; margin-top:4px; line-height:1.35;">${escHtml(descTxt)}</span>
+                        </td>
+                        <td>
+                            <div class="rec-box ${sevColor}">${escHtml(recTxt)}</div>
+                        </td>
+                        <td>${refsHtml}</td>
+                        <td class="sticky-action" onclick="event.stopPropagation()">${actionHtml}</td>
+                    </tr>
+                `;
+            });
+            return `
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:140px;">${escHtml(t.ColThreatCat)}</th>
+                                <th style="min-width:190px;">${escHtml(t.ColAppName)}</th>
+                                <th style="width:26%;">${escHtml(t.ColThreatCamp)}</th>
+                                <th style="width:28%;">${escHtml(t.ColThreatRec)}</th>
+                                <th style="min-width:190px;">${escHtml(t.ColThreatRefs)}</th>
+                                <th class="sticky-action">${escHtml(t.ColAction)}</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        const threatContainer = document.getElementById('threat-focus-container');
+        let threatHtml = '';
+        if (foundWatchlist.length === 0) {
+            threatHtml += `<div style="padding:12px; margin-bottom:12px;"><span class="badge Green"><span class="dot Green"></span>${escHtml(t.ThreatFocusEmpty)}</span></div>`;
+        } else {
+            threatHtml += `
+                <details class="group-box Red" open>
+                    <summary class="group-summary">
+                        <span>${escHtml(t.ThreatGroupFoundHeader)}</span>
+                        <span class="group-count">${foundWatchlist.length} Apps</span>
+                    </summary>
+                    ${buildWatchlistTableHtml(foundWatchlist)}
+                </details>
+            `;
+        }
+
+        if (notFoundWatchlist.length > 0) {
+            threatHtml += `
+                <details class="group-box Green" open>
+                    <summary class="group-summary">
+                        <span>${escHtml(t.ThreatGroupNotFoundHeader)}</span>
+                        <span class="group-count">${notFoundWatchlist.length} Apps</span>
+                    </summary>
+                    ${buildWatchlistTableHtml(notFoundWatchlist)}
+                </details>
+            `;
+        }
+        threatContainer.innerHTML = threatHtml;
+
+        document.getElementById('th-pol-id').textContent = t.ColPolicyId;
+        document.getElementById('th-pol-status').textContent = t.ColRiskStatus;
+        document.getElementById('th-pol-name').textContent = t.ColPolicyName;
+        document.getElementById('th-pol-curr').textContent = t.ColCurrentValue;
+        document.getElementById('th-pol-rec').textContent = t.ColRecommendedValue;
+        document.getElementById('th-pol-comp').textContent = t.ColCompliance;
+        document.getElementById('th-pol-act').textContent = t.ColAction;
+
+        const polBody = document.getElementById('tbody-policies');
+        polBody.innerHTML = '';
+        REPORT_DATA.TenantPolicies.forEach((pol, idx) => {
+            if (policyFilter !== 'ALL' && pol.Color !== policyFilter) return;
+            const statusLbl = pol.Color === 'Red' ? t.StatusRed : (pol.Color === 'Orange' ? t.StatusOrange : t.StatusGreen);
+            const nameTxt   = currentLang === 'DE' ? pol.NameDE : pol.NameEN;
+            const currTxt   = currentLang === 'DE' ? pol.CurrentDE : pol.CurrentEN;
+            const recTxt    = currentLang === 'DE' ? pol.RecommendedDE : pol.RecommendedEN;
+            const detTxt    = currentLang === 'DE' ? pol.DetailDE : pol.DetailEN;
+            const modPolTxt = currentLang === 'DE' ? (pol.LastModifiedDE || '') : (pol.LastModifiedEN || '');
+            const btnLabel  = pol.Color === 'Green' ? t.PolicyActionOkBtn : t.PolicyActionBtn;
+
+            const tr = document.createElement('tr');
+            tr.className = 'clickable-row';
+            tr.onclick = () => openPolicyModal(idx);
+            tr.innerHTML = `
+                <td><strong>${escHtml(pol.Id)}</strong></td>
+                <td>${badgeHtml(pol.Color, statusLbl)}</td>
+                <td>
+                    <strong>${escHtml(nameTxt)}</strong>
+                    <span class="sub-text">${escHtml(detTxt)}</span>
+                    ${modPolTxt ? `<span class="sub-text" style="color:var(--accent);">🕒 ${escHtml(modPolTxt)}</span>` : ''}
+                </td>
+                <td>${badgeHtml(pol.Color, currTxt)}</td>
+                <td>${escHtml(recTxt)}</td>
+                <td><span class="compliance-tag">${escHtml(pol.Compliance)}</span></td>
+                <td class="sticky-action" onclick="event.stopPropagation()"><button class="policy-btn ${pol.Color}" onclick="openPolicyModal(${idx})">${escHtml(btnLabel)}</button></td>
+            `;
+            polBody.appendChild(tr);
+        });
+
+        // Filter Applications
+        const q = (document.getElementById('app-search').value || '').toLowerCase();
+        const filteredApps = [];
+        REPORT_DATA.Applications.forEach((app, idx) => {
+            if (appFilter !== 'ALL' && app.OverallColor !== appFilter) return;
+            const hay = `${app.DisplayName} ${app.AppId} ${app.PublisherName} ${app.PermBadgeEN} ${app.RoleBadgeEN} ${app.EscBadgeEN} ${app.GovBadgeDE}`.toLowerCase();
+            if (q && !hay.includes(q)) return;
+            filteredApps.push({ app, idx });
+        });
+
+        const container = document.getElementById('apps-container');
+        if (!groupedMode) {
+            container.innerHTML = buildAppTableHtml(filteredApps, t);
+        } else {
+            const redApps    = filteredApps.filter(x => x.app.OverallColor === 'Red');
+            const orangeApps = filteredApps.filter(x => x.app.OverallColor === 'Orange');
+            const greenApps  = filteredApps.filter(x => x.app.OverallColor === 'Green');
+
+            let html = '';
+            if (redApps.length > 0 || appFilter === 'Red') {
+                html += `
+                    <details class="group-box Red" open>
+                        <summary class="group-summary">
+                            <span>${escHtml(t.GroupHeaderRed)}</span>
+                            <span class="group-count">${redApps.length} Apps</span>
+                        </summary>
+                        ${buildAppTableHtml(redApps, t)}
+                    </details>
+                `;
+            }
+            if (orangeApps.length > 0 || appFilter === 'Orange') {
+                html += `
+                    <details class="group-box Orange" open>
+                        <summary class="group-summary">
+                            <span>${escHtml(t.GroupHeaderOrange)}</span>
+                            <span class="group-count">${orangeApps.length} Apps</span>
+                        </summary>
+                        ${buildAppTableHtml(orangeApps, t)}
+                    </details>
+                `;
+            }
+            if (greenApps.length > 0 || appFilter === 'Green') {
+                html += `
+                    <details class="group-box Green" open>
+                        <summary class="group-summary">
+                            <span>${escHtml(t.GroupHeaderGreen)}</span>
+                            <span class="group-count">${greenApps.length} Apps</span>
+                        </summary>
+                        ${buildAppTableHtml(greenApps, t)}
+                    </details>
+                `;
+            }
+            container.innerHTML = html;
+        }
+    }
+
+    function buildAppDossierHtml(app, t) {
+        const reasons = (currentLang === 'DE' ? app.ReasonsDE : app.ReasonsEN) || [];
+        const roles   = app.FullDirectoryRoles || [];
+        const appRoles = app.FullAppRoleAssignments || [];
+        const delScopes = app.FullDelegatedScopes || [];
+        const pwds    = app.FullPasswordCredentials || [];
+        const certs   = app.FullKeyCredentials || [];
+
+        const reasonsHtml = reasons.map(r => `<li>${escHtml(r)}</li>`).join('');
+
+        const rolesHtml = roles.length === 0
+            ? `<span class="badge Green"><span class="dot Green"></span>${currentLang === 'DE' ? 'Keine aktiven Entra Directory Admin-Rollen' : 'No active Entra Directory Admin roles'}</span>`
+            : roles.map(r => `<div class="perm-card Red"><strong>👑 ${escHtml(r.DisplayName)}</strong><span class="sub-text">RoleId: ${escHtml(r.RoleId)}</span></div>`).join('');
+
+        const appPermsHtml = appRoles.length === 0
+            ? `<span class="badge Green"><span class="dot Green"></span>${currentLang === 'DE' ? 'Keine Application Permissions (AppRoleAssignments)' : 'No Application Permissions (AppRoleAssignments)'}</span>`
+            : appRoles.map(p => `
+                <div class="perm-card ${p.Severity || 'Green'}">
+                    <div>${badgeHtml(p.Severity || 'Green', p.Permission)}</div>
+                    <span class="sub-text">Resource: ${escHtml(p.ResourceName)} | AssignmentId: ${escHtml(p.Id)}</span>
+                    <span class="sub-text">${escHtml(currentLang === 'DE' ? p.ReasonDE : p.ReasonEN)}</span>
+                </div>
+            `).join('');
+
+        const delPermsHtml = delScopes.length === 0
+            ? `<span class="badge Green"><span class="dot Green"></span>${currentLang === 'DE' ? 'Keine Delegated OAuth2 Scopes' : 'No Delegated OAuth2 Scopes'}</span>`
+            : delScopes.map(d => `
+                <div class="perm-card ${d.Severity || 'Green'}">
+                    <div>${badgeHtml(d.Severity || 'Green', d.Scope)}</div>
+                    <span class="sub-text">ConsentType: ${escHtml(d.ConsentType)} | GrantId: ${escHtml(d.GrantId)}</span>
+                </div>
+            `).join('');
+
+        let credsHtml = '';
+        if (pwds.length === 0 && certs.length === 0) {
+            credsHtml = `<span class="badge Green"><span class="dot Green"></span>${currentLang === 'DE' ? 'Keine lokalen Passwörter oder Zertifikate hinterlegt' : 'No local passwords or certificates configured'}</span>`;
+        } else {
+            pwds.forEach(p => {
+                credsHtml += `
+                    <div class="perm-card Red">
+                        <strong>🔑 Secret: ${escHtml(p.DisplayName)} (${escHtml(p.SourceObject)})</strong>
+                        <span class="sub-text">KeyId: ${escHtml(p.KeyId)}</span>
+                        <span class="sub-text">Start: ${escHtml(p.StartDateTime)} | End: ${escHtml(p.EndDateTime)}</span>
+                    </div>
+                `;
+            });
+            certs.forEach(c => {
+                credsHtml += `
+                    <div class="perm-card Green">
+                        <strong>📜 Certificate: ${escHtml(c.DisplayName)} (${escHtml(c.SourceObject)})</strong>
+                        <span class="sub-text">KeyId: ${escHtml(c.KeyId)}</span>
+                        <span class="sub-text">Start: ${escHtml(c.StartDateTime)} | End: ${escHtml(c.EndDateTime)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        let threatDossierHtml = '';
+        if (app.IsThreatIntelMatch) {
+            const sevColor = (app.IocColor === 'Red' || app.OverallColor === 'Red') ? 'Red' : 'Orange';
+            const descTxt  = currentLang === 'DE' ? app.ThreatDescriptionDE : app.ThreatDescriptionEN;
+            const recTxt   = currentLang === 'DE' ? app.RecommendationDE : app.RecommendationEN;
+            const refs     = app.ThreatReferences || [];
+            const refsHtml = refs.map(r => `
+                <a class="ref-link" href="${escHtml(r.url)}" target="_blank" rel="noopener noreferrer" style="margin-right:8px; margin-bottom:6px;">
+                    🔗 ${escHtml(r.title)} <span style="opacity:0.75; font-family:Consolas,monospace; font-size:0.7rem;">(${escHtml(r.url)})</span>
+                </a>
+            `).join('');
+
+            threatDossierHtml = `
+                <div class="dossier-section" style="border: 2px solid var(--${sevColor.toLowerCase()}-border); background: rgba(239, 68, 68, 0.06);">
+                    <h4 style="color: var(--${sevColor.toLowerCase()}-text);">${escHtml(t.DossierSecThreatIntel)}</h4>
+                    <div class="kv-grid" style="margin-bottom:10px;">
+                        <div class="kv-item"><span class="kv-label">${escHtml(t.ColThreatCat)}</span><span class="kv-val">${escHtml(app.ThreatCategory)}</span></div>
+                        <div class="kv-item"><span class="kv-label">${escHtml(t.ColThreatCamp)}</span><span class="kv-val">${escHtml(app.ThreatCampaign)}</span></div>
+                    </div>
+                    <p style="font-size:0.84rem; margin-bottom:10px; line-height:1.45;">${escHtml(descTxt)}</p>
+                    <div class="rec-box ${sevColor}" style="margin-bottom:12px;">
+                        <strong>💡 ${escHtml(t.ColThreatRec)}:</strong><br>${escHtml(recTxt)}
+                    </div>
+                    <div>
+                        <span class="kv-label" style="margin-bottom:6px;">📚 ${escHtml(t.ColThreatRefs)}:</span>
+                        <div style="display:flex; flex-wrap:wrap; margin-top:4px;">${refsHtml}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        return `
+            ${threatDossierHtml}
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecIdentity)}</h4>
+                <div class="kv-grid">
+                    <div class="kv-item"><span class="kv-label">Display Name</span><span class="kv-val">${escHtml(app.DisplayName)}</span></div>
+                    <div class="kv-item"><span class="kv-label">Application (Client) ID</span><span class="kv-val">${escHtml(app.AppId)}</span></div>
+                    <div class="kv-item"><span class="kv-label">Service Principal ObjectId</span><span class="kv-val">${escHtml(app.ObjectId)}</span></div>
+                    <div class="kv-item"><span class="kv-label">Publisher & Verification</span><span class="kv-val">${escHtml(app.PublisherName)}</span></div>
+                    <div class="kv-item"><span class="kv-label">Sign-In Audience & Type</span><span class="kv-val">${escHtml(app.SignInAudience)} (${escHtml(app.ServicePrincipalType || 'Application')})</span></div>
+                    <div class="kv-item"><span class="kv-label">Sign-In & User Assignment</span><span class="kv-val">${escHtml(currentLang === 'DE' ? app.GovBadgeDE : app.GovBadgeEN)}</span></div>
+                    <div class="kv-item" style="grid-column: 1 / -1;"><span class="kv-label">Audit-Historie (Zuletzt geändert am / Von UPN & GUID)</span><span class="kv-val" style="color:var(--accent);">${escHtml(currentLang === 'DE' ? (app.LastModifiedDE || '-') : (app.LastModifiedEN || '-'))}</span></div>
+                </div>
+            </div>
+
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecFindings)}</h4>
+                <ul class="reasons-list">${reasonsHtml}</ul>
+            </div>
+
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecRoles)} (${roles.length})</h4>
+                <div class="pill-grid">${rolesHtml}</div>
+            </div>
+
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecAppPerms)} (${appRoles.length})</h4>
+                <div class="pill-grid">${appPermsHtml}</div>
+            </div>
+
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecDelPerms)} (${delScopes.length})</h4>
+                <div class="pill-grid">${delPermsHtml}</div>
+            </div>
+
+            <div class="dossier-section">
+                <h4>${escHtml(t.DossierSecCreds)} (Secrets: ${pwds.length} | Certs: ${certs.length})</h4>
+                <div class="pill-grid">${credsHtml}</div>
+            </div>
+        `;
+    }
+
+    function openPolicyModal(idx) {
+        const t = I18N_DATA[currentLang];
+        const pol = REPORT_DATA.TenantPolicies[idx];
+        const dossierHtml = `
+            <div class="dossier-section">
+                <h4>${escHtml(pol.Id)} – ${escHtml(currentLang === 'DE' ? pol.NameDE : pol.NameEN)}</h4>
+                <div class="kv-grid">
+                    <div class="kv-item"><span class="kv-label">${escHtml(t.ColCurrentValue)}</span><span class="kv-val">${escHtml(currentLang === 'DE' ? pol.CurrentDE : pol.CurrentEN)}</span></div>
+                    <div class="kv-item"><span class="kv-label">${escHtml(t.ColRecommendedValue)}</span><span class="kv-val">${escHtml(currentLang === 'DE' ? pol.RecommendedDE : pol.RecommendedEN)}</span></div>
+                    <div class="kv-item"><span class="kv-label">${escHtml(t.ColCompliance)}</span><span class="kv-val">${escHtml(pol.Compliance)}</span></div>
+                    <div class="kv-item" style="grid-column: 1 / -1;"><span class="kv-label">Audit-Historie (Zuletzt geändert am / Von UPN & GUID)</span><span class="kv-val" style="color:var(--accent);">${escHtml(currentLang === 'DE' ? (pol.LastModifiedDE || '-') : (pol.LastModifiedEN || '-'))}</span></div>
+                </div>
+                <p style="margin-top:12px; font-size:0.86rem; color:#cbd5e1;">${escHtml(currentLang === 'DE' ? pol.DetailDE : pol.DetailEN)}</p>
+            </div>
+        `;
+        activeModalItem = {
+            isApp: false,
+            cleanFileName: `Policy_${pol.Id}`,
+            prefix: t.ModalPolicyTitlePrefix,
+            title: `${pol.Id} - ${currentLang === 'DE' ? pol.NameDE : pol.NameEN}`,
+            dossierHtml: dossierHtml,
+            sdk1: pol.LockdownSdk,
+            sdk2: pol.LockdownSdk,
+            sdk3: pol.LockdownSdk,
+            rest1: pol.LockdownRest,
+            rest2: pol.LockdownRest,
+            rest3: pol.LockdownRest
+        };
+        activeStage = 1;
+        showModal('LOCKDOWN');
+    }
+
+    function openAppModal(idx, initialView) {
+        const t = I18N_DATA[currentLang];
+        const app = REPORT_DATA.Applications[idx];
+        const safeName = (app.DisplayName || 'App').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 45);
+        activeModalItem = {
+            isApp: true,
+            cleanFileName: `${safeName}_${(app.AppId || '').substring(0, 8)}`,
+            prefix: t.ModalTitlePrefix,
+            title: `${app.DisplayName} (AppId: ${app.AppId})`,
+            dossierHtml: buildAppDossierHtml(app, t),
+            sdk1: app.LockdownSdkStage1 || app.LockdownSdk,
+            sdk2: app.LockdownSdkStage2 || app.LockdownSdk,
+            sdk3: app.LockdownSdkStage3 || app.LockdownSdk,
+            rest1: app.LockdownRestStage1 || app.LockdownRest,
+            rest2: app.LockdownRestStage2 || app.LockdownRest,
+            rest3: app.LockdownRestStage3 || app.LockdownRest
+        };
+        activeStage = 1;
+        showModal(initialView || 'DOSSIER');
+    }
+
+    function showModal(viewMode) {
+        const t = I18N_DATA[currentLang];
+        document.getElementById('modal-title').textContent = `${activeModalItem.prefix} ${activeModalItem.title}`;
+        document.getElementById('modal-readonly-note').textContent = t.ModalReadOnlyNote;
+        document.getElementById('btn-print-pdf').textContent = t.PrintPdfBtn;
+        document.getElementById('btn-tab-dossier').textContent = t.TabDossier;
+        document.getElementById('btn-tab-lockdown').textContent = t.TabLockdown;
+        document.getElementById('tab-sdk').textContent = t.TabGraphSdk;
+        document.getElementById('tab-rest').textContent = t.TabGraphRest;
+        document.getElementById('btn-copy').textContent = t.CopyBtn;
+        document.getElementById('btn-download-ps1').textContent = t.DownloadPs1Btn;
+        document.getElementById('btn-download-txt').textContent = t.DownloadTxtBtn;
+        document.getElementById('lbl-whatif-toggle').textContent = t.WhatIfToggleLabel;
+
+        document.getElementById('btn-stage-1').textContent = t.Stage1Btn;
+        document.getElementById('btn-stage-2').textContent = t.Stage2Btn;
+        document.getElementById('btn-stage-3').textContent = t.Stage3Btn;
+        document.getElementById('stage-selector-container').style.display = activeModalItem.isApp ? 'block' : 'none';
+
+        document.getElementById('pane-dossier').innerHTML = activeModalItem.dossierHtml || '';
+        switchLockdownStage(activeStage);
+        switchCodeTab(activeCodeMode);
+        switchModalView(viewMode || 'DOSSIER');
+        document.getElementById('lockdown-modal').classList.add('open');
+    }
+
+    function switchModalView(viewMode) {
+        activeModalView = viewMode;
+        document.getElementById('btn-tab-dossier').classList.toggle('active', viewMode === 'DOSSIER');
+        document.getElementById('btn-tab-lockdown').classList.toggle('active', viewMode === 'LOCKDOWN');
+        document.getElementById('pane-dossier').style.display = viewMode === 'DOSSIER' ? 'block' : 'none';
+        document.getElementById('pane-lockdown').style.display = viewMode === 'LOCKDOWN' ? 'block' : 'none';
+    }
+
+    function switchLockdownStage(stageNum) {
+        activeStage = stageNum;
+        const t = I18N_DATA[currentLang];
+        document.getElementById('btn-stage-1').classList.toggle('active', stageNum === 1);
+        document.getElementById('btn-stage-2').classList.toggle('active', stageNum === 2);
+        document.getElementById('btn-stage-3').classList.toggle('active', stageNum === 3);
+
+        const descBox = document.getElementById('stage-desc-box');
+        descBox.className = `stage-desc-banner stage-${stageNum}`;
+        descBox.textContent = stageNum === 1 ? t.Stage1Desc : (stageNum === 2 ? t.Stage2Desc : t.Stage3Desc);
+        refreshCodeBox();
+    }
+
+    function switchCodeTab(mode) {
+        activeCodeMode = mode;
+        document.getElementById('tab-sdk').classList.toggle('active', mode === 'SDK');
+        document.getElementById('tab-rest').classList.toggle('active', mode === 'REST');
+        refreshCodeBox();
+    }
+
+    function refreshCodeBox() {
+        if (!activeModalItem) return;
+        let rawCode = '';
+        if (activeCodeMode === 'SDK') {
+            rawCode = activeStage === 1 ? activeModalItem.sdk1 : (activeStage === 2 ? activeModalItem.sdk2 : activeModalItem.sdk3);
+        } else {
+            rawCode = activeStage === 1 ? activeModalItem.rest1 : (activeStage === 2 ? activeModalItem.rest2 : activeModalItem.rest3);
+        }
+        const keepWhatIf = document.getElementById('chk-whatif').checked;
+        if (!keepWhatIf) {
+            rawCode = rawCode.replace(/\[SIMULATION \/ -WhatIf\][^\n"]*/g, '[LIVE EXECUTION] Changes applied in Microsoft Entra ID! Verifying live state:');
+            rawCode = rawCode.replace(/-ForegroundColor Yellow/g, '-ForegroundColor Green');
+            rawCode = rawCode.replace(/\s+-WhatIf\b/g, '');
+        }
+        document.getElementById('modal-code').textContent = rawCode;
+    }
+
+    function closeModal() {
+        document.getElementById('lockdown-modal').classList.remove('open');
+    }
+
+    function copyLockdownCode() {
+        const t = I18N_DATA[currentLang];
+        const code = document.getElementById('modal-code').textContent;
+        navigator.clipboard.writeText(code);
+        const btn = document.getElementById('btn-copy');
+        btn.textContent = t.CopiedMsg;
+        setTimeout(() => { btn.textContent = t.CopyBtn; }, 1500);
+    }
+
+    function downloadLockdownScript(ext) {
+        if (!activeModalItem) return;
+        const safeExt  = (ext === 'txt') ? 'txt' : 'ps1';
+        const code     = document.getElementById('modal-code').textContent;
+        const stageTag = activeModalItem.isApp ? `_Stage${activeStage}` : '';
+        const modeTag  = activeCodeMode === 'SDK' ? '_SDK' : '_REST';
+        const fileName = `AppSentry_Lockdown_${activeModalItem.cleanFileName}${stageTag}${modeTag}.${safeExt}`;
+        const blob = new Blob(["\uFEFF" + code], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 200);
+    }
+
+    function openPrintPreviewTab() {
+        if (!activeModalItem) return;
+        const t = I18N_DATA[currentLang];
+        const s = REPORT_DATA.Summary;
+        const code = document.getElementById('modal-code').textContent;
+        const printBtnLbl = currentLang === 'DE' ? '🖨️ Jetzt drucken / Als PDF speichern' : '🖨️ Print / Save as PDF Now';
+        const closeBtnLbl = currentLang === 'DE' ? '✖ Tab schließen (Zurück zum Report)' : '✖ Close Tab (Back to Report)';
+        const codeTitle   = currentLang === 'DE' ? `Ausgewähltes Lockdown-Playbook (Stufe ${activeStage} - ${activeCodeMode})` : `Selected Lockdown Playbook (Stage ${activeStage} - ${activeCodeMode})`;
+
+        const printHtml = `<!DOCTYPE html>
+<html lang="${currentLang.toLowerCase()}">
+<head>
+    <meta charset="UTF-8">
+    <title>AppSentry for M365 Dossier - ${escHtml(activeModalItem.title)}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 24px;
+            line-height: 1.45;
+        }
+        .print-toolbar {
+            max-width: 1050px;
+            margin: 0 auto 18px auto;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 12px 18px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        }
+        .print-toolbar-title { font-weight: 700; font-size: 0.95rem; color: #38bdf8; }
+        .print-toolbar-actions { display: flex; gap: 10px; }
+        .btn-action-print {
+            background: #0284c7;
+            color: #fff;
+            border: 1px solid #38bdf8;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .btn-action-print:hover { background: #0369a1; }
+        .btn-action-close {
+            background: #dc2626;
+            color: #fff;
+            border: 1px solid #f87171;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .btn-action-close:hover { background: #b91c1c; }
+        .sheet {
+            max-width: 1050px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 28px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .sheet-header {
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .sheet-header h1 { font-size: 1.25rem; color: #0f172a; margin-bottom: 4px; }
+        .sheet-meta { font-size: 0.8rem; color: #475569; font-family: Consolas, monospace; }
+        .dossier-section {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            page-break-inside: avoid;
+        }
+        .dossier-section h4 {
+            font-size: 0.92rem;
+            color: #0369a1;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        .kv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            font-size: 0.82rem;
+        }
+        .kv-item { background: #ffffff; padding: 8px 10px; border-radius: 6px; border: 1px solid #cbd5e1; }
+        .kv-label { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+        .kv-val { font-weight: 700; color: #0f172a; font-family: Consolas, monospace; word-break: break-all; }
+        .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .perm-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            flex: 1 1 260px;
+            page-break-inside: avoid;
+        }
+        .perm-card.Red { border-left: 4px solid #ef4444; }
+        .perm-card.Orange { border-left: 4px solid #f59e0b; }
+        .perm-card.Green { border-left: 4px solid #10b981; }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+        }
+        .badge.Red { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+        .badge.Orange { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+        .badge.Green { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+        .dot.Red { background: #ef4444; }
+        .dot.Orange { background: #f59e0b; }
+        .dot.Green { background: #10b981; }
+        .sub-text { display: block; font-size: 0.72rem; color: #475569; margin-top: 2px; font-family: Consolas, monospace; }
+        .reasons-list { padding-left: 20px; font-size: 0.84rem; color: #991b1b; }
+        .reasons-list li { margin-bottom: 4px; }
+        .rec-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: #78350f;
+            line-height: 1.4;
+        }
+        .rec-box.Red {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+            color: #7f1d1d;
+        }
+        .ref-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #e0f2fe;
+            border: 1px solid #0284c7;
+            color: #0369a1;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        pre.print-code {
+            background: #f1f5f9;
+            border: 1px solid #94a3b8;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: Consolas, monospace;
+            font-size: 0.78rem;
+            color: #0f172a;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .print-toolbar { display: none !important; }
+            .sheet { border: none; box-shadow: none; padding: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-toolbar">
+        <span class="print-toolbar-title">🛡️ AppSentry for M365 | Audit Evidence & Dossier Print View</span>
+        <div class="print-toolbar-actions">
+            <button class="btn-action-print" onclick="window.print()">${escHtml(printBtnLbl)}</button>
+            <button class="btn-action-close" onclick="window.close()">${escHtml(closeBtnLbl)}</button>
+        </div>
+    </div>
+    <div class="sheet">
+        <div class="sheet-header">
+            <div>
+                <h1>${escHtml(activeModalItem.prefix)} ${escHtml(activeModalItem.title)}</h1>
+                <div class="sheet-meta">Tenant: ${escHtml(s.TenantName)} (${escHtml(s.TenantId)}) | Scan: ${escHtml(s.ScanTimestampUtc)}</div>
+            </div>
+            <div class="sheet-meta">AppSentry for M365 v2.0</div>
+        </div>
+        ${activeModalItem.dossierHtml}
+        <div class="dossier-section">
+            <h4>🔒 ${escHtml(codeTitle)}</h4>
+            <pre class="print-code">${escHtml(code)}</pre>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        const blob = new Blob([printHtml], { type: 'text/html;charset=utf-8' });
+        const url  = URL.createObjectURL(blob);
+        const win  = window.open(url, '_blank');
+        if (win) {
+            win.onload = function() {
+                setTimeout(() => { win.print(); }, 250);
+            };
+        }
+    }
+
+    // Initialize
+    setLanguage(currentLang);
+</script>
+</body>
+</html>

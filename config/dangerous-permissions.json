@@ -1,0 +1,222 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Classification of Microsoft Graph, Exchange, and SharePoint permissions by risk level (Red / Orange / Green)."
+  },
+  "escalationPermissions": [
+    {
+      "value": "RoleManagement.ReadWrite.Directory",
+      "category": "PrivilegeEscalation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch (Tier-0): Kann beliebigen Apps oder Benutzern direkt Global Administrator Rechte zuweisen!",
+      "reasonEN": "Critical (Tier-0): Can directly assign Global Administrator roles to any app or user!"
+    },
+    {
+      "value": "AppRoleAssignment.ReadWrite.All",
+      "category": "PrivilegeEscalation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch (Tier-0): Kann sich selbst oder anderen Apps beliebige Microsoft Graph API-Berechtigungen (inkl. RoleManagement) gewähren!",
+      "reasonEN": "Critical (Tier-0): Can grant itself or other apps arbitrary Microsoft Graph API permissions (including RoleManagement)!"
+    },
+    {
+      "value": "Application.ReadWrite.All",
+      "category": "CredentialBackdoor",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch (Backdoor-Gefahr): Kann zu JEDER bestehenden App im Tenant neue Passwörter (Client Secrets) oder Zertifikate hinzufügen!",
+      "reasonEN": "Critical (Backdoor Risk): Can add new passwords (client secrets) or certificates to ANY existing application in the tenant!"
+    },
+    {
+      "value": "Directory.ReadWrite.All",
+      "category": "DirectoryControl",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch: Vollständiger Schreibzugriff auf das gesamte Entra ID Verzeichnis (Gruppen, Benutzer, Objekte).",
+      "reasonEN": "Critical: Full read/write access across the entire Entra ID directory (groups, users, objects)."
+    },
+    {
+      "value": "PrivilegedAccess.ReadWrite.AzureAD",
+      "category": "PrivilegeEscalation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch: Kann privilegierte PIM-Rollenzuweisungen im Verzeichnis manipulieren.",
+      "reasonEN": "Critical: Can manipulate privileged PIM role assignments in the directory."
+    },
+    {
+      "value": "Policy.ReadWrite.AuthenticationFlows",
+      "category": "PolicyManipulation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": false,
+      "reasonDE": "Kritisch: Kann Authentifizierungsflüsse und Sicherheitsrichtlinien des Tenants verändern.",
+      "reasonEN": "Critical: Can modify tenant authentication flows and security policies."
+    },
+    {
+      "value": "Policy.ReadWrite.ConditionalAccess",
+      "category": "PolicyManipulation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": false,
+      "reasonDE": "Kritisch: Kann Conditional Access Richtlinien verändern oder deaktivieren!",
+      "reasonEN": "Critical: Can modify or disable Conditional Access policies!"
+    },
+    {
+      "value": "Policy.ReadWrite.ApplicationConfiguration",
+      "category": "PolicyManipulation",
+      "severity": "Red",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Kritisch: Kann die Tenant App Management Policy (Passwortschutz für Apps) deaktivieren!",
+      "reasonEN": "Critical: Can disable the Tenant App Management Policy (password restrictions for apps)!"
+    },
+    {
+      "value": "Application.ReadWrite.OwnedBy",
+      "category": "CredentialWarning",
+      "severity": "Orange",
+      "canAddPasswordsOrRoles": true,
+      "reasonDE": "Warnung: App kann eigene App-Registrierungen erstellen und für diese Passwörter/Secrets verwalten.",
+      "reasonEN": "Warning: App can create its own app registrations and manage passwords/secrets for them."
+    }
+  ],
+  "highRiskDataPermissions": [
+    {
+      "value": "Mail.ReadWrite",
+      "severity": "Red",
+      "reasonDE": "Vollzugriff (Lesen/Schreiben) auf alle E-Mail-Postfächer im Tenant.",
+      "reasonEN": "Full read/write access to all email mailboxes in the tenant."
+    },
+    {
+      "value": "Mail.Send",
+      "severity": "Red",
+      "reasonDE": "Kann E-Mails im Namen jedes beliebigen Benutzers im Tenant versenden (Phishing-Risiko).",
+      "reasonEN": "Can send emails as any user in the tenant (Internal phishing risk)."
+    },
+    {
+      "value": "full_access_as_app",
+      "severity": "Red",
+      "reasonDE": "Exchange Web Services (EWS) Vollzugriff auf alle Postfächer im gesamten Tenant.",
+      "reasonEN": "Exchange Web Services (EWS) full access to all mailboxes across the tenant."
+    },
+    {
+      "value": "Files.ReadWrite.All",
+      "severity": "Red",
+      "reasonDE": "Vollständiger Lese- und Schreibzugriff auf alle Dateien in OneDrive und SharePoint.",
+      "reasonEN": "Full read and write access to all files in OneDrive and SharePoint."
+    },
+    {
+      "value": "Sites.FullControl.All",
+      "severity": "Red",
+      "reasonDE": "Vollzugriff (Full Control) auf alle SharePoint Online Websitesammlungen.",
+      "reasonEN": "Full control over all SharePoint Online site collections."
+    },
+    {
+      "value": "Directory.AccessAsUser.All",
+      "severity": "Red",
+      "reasonDE": "Kann im Namen des angemeldeten Benutzers mit dessen vollen Admin-Rechten auf das Verzeichnis zugreifen.",
+      "reasonEN": "Can access the directory as the signed-in user with their full administrative privileges."
+    },
+    {
+      "value": "User.Export.All",
+      "severity": "Red",
+      "reasonDE": "Kann sämtliche Benutzerdaten und Aktivitäten exportieren.",
+      "reasonEN": "Can export all user data and activity."
+    }
+  ],
+  "mediumRiskPermissions": [
+    {
+      "value": "Mail.Read",
+      "severity": "Orange",
+      "reasonDE": "Lesezugriff auf alle E-Mail-Postfächer (Hohes Datenexfiltrationsrisiko bei Backup/Vendor-Kompromittierung).",
+      "reasonEN": "Read access to all email mailboxes (High data exfiltration risk if vendor is compromised)."
+    },
+    {
+      "value": "Mail.ReadBasic.All",
+      "severity": "Orange",
+      "reasonDE": "Lesezugriff auf E-Mail-Metadaten (Betreff, Absender, Empfänger) aller Postfächer.",
+      "reasonEN": "Read access to email metadata (subject, sender, recipients) across all mailboxes."
+    },
+    {
+      "value": "Files.Read.All",
+      "severity": "Orange",
+      "reasonDE": "Lesezugriff auf alle OneDrive- und SharePoint-Dateien im Tenant.",
+      "reasonEN": "Read access to all OneDrive and SharePoint files in the tenant."
+    },
+    {
+      "value": "Sites.ReadWrite.All",
+      "severity": "Orange",
+      "reasonDE": "Lese- und Schreibzugriff auf alle SharePoint-Websites (Besser: Sites.Selected verwenden!).",
+      "reasonEN": "Read and write access to all SharePoint sites (Better practice: use Sites.Selected!)."
+    },
+    {
+      "value": "Sites.Read.All",
+      "severity": "Orange",
+      "reasonDE": "Lesezugriff auf alle SharePoint-Websites im Tenant (Besser: Sites.Selected verwenden!).",
+      "reasonEN": "Read access to all SharePoint sites in the tenant (Better practice: use Sites.Selected!)."
+    },
+    {
+      "value": "User.ReadWrite.All",
+      "severity": "Orange",
+      "reasonDE": "Kann alle Benutzerprofile im Tenant lesen und überschreiben.",
+      "reasonEN": "Can read and update all user profiles in the tenant."
+    },
+    {
+      "value": "Group.ReadWrite.All",
+      "severity": "Orange",
+      "reasonDE": "Kann alle Microsoft 365- und Sicherheitsgruppen lesen sowie deren Mitgliedschaften ändern.",
+      "reasonEN": "Can read all Microsoft 365 and security groups and modify their memberships."
+    },
+    {
+      "value": "ChannelMessage.Read.All",
+      "severity": "Orange",
+      "reasonDE": "Kann alle Nachrichten in sämtlichen Microsoft Teams Kanälen mitlesen.",
+      "reasonEN": "Can read all messages across all Microsoft Teams channels."
+    },
+    {
+      "value": "Chat.Read.All",
+      "severity": "Orange",
+      "reasonDE": "Kann alle privaten 1:1 und Gruppen-Chats in Microsoft Teams mitlesen.",
+      "reasonEN": "Can read all private 1:1 and group chats in Microsoft Teams."
+    }
+  ],
+  "criticalDirectoryRoles": [
+    {
+      "roleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+      "displayName": "Global Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "e8611ab8-c189-46e8-94e1-60213ab1f814",
+      "displayName": "Privileged Role Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3",
+      "displayName": "Application Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "158c047a-c907-4556-b7ef-446551a6b5f7",
+      "displayName": "Cloud Application Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "29232cdf-9323-42fd-ade2-1d097af3e4de",
+      "displayName": "Exchange Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "f28a1f50-f6e7-4571-818b-6a12f2af6b6c",
+      "displayName": "SharePoint Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "7be44c8a-adaf-4e2a-84d6-ab2649e08a13",
+      "displayName": "Privileged Authentication Administrator",
+      "severity": "Red"
+    },
+    {
+      "roleTemplateId": "88d8e3e3-8f55-4a1e-953a-9b9898b8876b",
+      "displayName": "Directory Readers",
+      "severity": "Orange"
+    }
+  ]
+}
