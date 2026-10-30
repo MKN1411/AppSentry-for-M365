@@ -77,7 +77,36 @@ Invoke-AppSentry -Language EN
 
 
 ---
+## Screenshots (Demo-Modus, Beispieldaten / sample data)
+
+### 1. Globale Tenant-Einstellungen (T-01 bis T-14) / 1. Global tenant settings (T-01 to T-14)
+Aktuelle Werte, Empfehlung, Regulatorik-Bezug und Audit-Log-Hinweis je Einstellung.
+
+![1. Global tenant settings (T-01 to T-14)](docs/screenshots/screenshot-1-tenant-policies.png)
+
+### 2. Watchlist: im Tenant gefunden / 2. Watchlist: found in tenant
+Treffer mit Kampagne, Handlungsempfehlung und Quellen. Der Button "Lockdown" öffnet das Playbook.
+
+![2. Watchlist: found in tenant](docs/screenshots/screenshot-2-watchlist-found.png)
+
+### 2. Watchlist: nicht gefunden / 2. Watchlist: not found
+Apps der Watchlist, die zum Prüfzeitpunkt nicht im Tenant gefunden wurden (Stand der Datenbasis, keine Garantie).
+
+![2. Watchlist: not found](docs/screenshots/screenshot-3-watchlist-not-found.png)
+
+### 3. App-Inventar mit Ampel / 3. App inventory with traffic light
+Alle Apps in sechs Dimensionen: Threat Intel, Passwort-/Rollen-Macht, Admin-Rollen, API-Berechtigungen, Secrets, Publisher.
+
+![3. App inventory with traffic light](docs/screenshots/screenshot-4-app-inventory.png)
+
+### App-Dossier und Lockdown-Playbook / App dossier and lockdown playbook
+Detailansicht je App mit allen Daten, Quellen und kopierfertigen PowerShell-/REST-Befehlen (zuerst mit -WhatIf).
+
+![App dossier and lockdown playbook](docs/screenshots/screenshot-5-app-dossier.png)
+
+---
 ## Hinweis / Disclaimer
 DE: Bereitstellung ohne Gewähr; keine Garantie auf Vollständigkeit, Aktualität oder Schutzwirkung. Die Watchlist ist ein Stand und ersetzt keine eigene Sicherheitsprüfung.
 EN: Provided as is; no guarantee of completeness, timeliness or protective effect. The watchlist is a snapshot and does not replace your own security review.
+
 

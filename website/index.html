@@ -127,6 +127,9 @@
             .container { padding: 0 16px; }
             .grid-3 { grid-template-columns: 1fr; }
         }
+        .shot { padding: 12px !important; margin: 0; }
+        .shot img { width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block; margin-bottom: 12px; }
+        .shot h3 { font-size: 1.05rem; }
     </style>
 </head>
 <body>
@@ -138,7 +141,7 @@
             </div>
             <div class="nav-actions">
                 <button class="btn btn-outline" onclick="toggleLang()" id="langBtn">🇬🇧 EN / 🇩🇪 DE</button>
-                <a class="btn btn-outline" href="#guide">📘 Anleitung / Guide</a><a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">📚 Blog</a>
+                <a class="btn btn-outline" href="#screens">🖼️ Screens</a><a class="btn btn-outline" href="#guide">📘 Anleitung / Guide</a><a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">📚 Blog</a>
                 <a class="btn btn-primary" href="https://github.com/MKN1411/AppSentry-for-M365" target="_blank" rel="noopener">⭐ GitHub Repo</a>
             </div>
         </div>
@@ -221,6 +224,19 @@
                 <img src="assets/appsentry-linkedin-banner.png" alt="Without Protection vs With AppSentry for M365">
             </div>
         </section>
+        <section class="section" id="screens">
+            <h2 class="section-title" data-lang="de">So sieht der Bericht aus</h2>
+            <h2 class="section-title" data-lang="en">What the report looks like</h2>
+            <p class="section-sub" data-lang="de">Screenshots aus dem Demo-Modus mit Beispieldaten (Contoso).</p>
+            <p class="section-sub" data-lang="en">Screenshots from demo mode with sample data (Contoso).</p>
+            <div class="grid-2">
+                <figure class="card shot"><a href="assets/screenshot-1-tenant-policies.png" target="_blank" rel="noopener"><img src="assets/screenshot-1-tenant-policies.png" alt="1. Global tenant settings (T-01 to T-14)" loading="lazy"></a><figcaption><h3 data-lang="de">1. Globale Tenant-Einstellungen (T-01 bis T-14)</h3><h3 data-lang="en">1. Global tenant settings (T-01 to T-14)</h3><p data-lang="de">Aktuelle Werte, Empfehlung, Regulatorik-Bezug und Audit-Log-Hinweis je Einstellung.</p><p data-lang="en">Current values, recommendation, regulatory mapping and audit log hint per setting.</p></figcaption></figure>
+                <figure class="card shot"><a href="assets/screenshot-2-watchlist-found.png" target="_blank" rel="noopener"><img src="assets/screenshot-2-watchlist-found.png" alt="2. Watchlist: found in tenant" loading="lazy"></a><figcaption><h3 data-lang="de">2. Watchlist: im Tenant gefunden</h3><h3 data-lang="en">2. Watchlist: found in tenant</h3><p data-lang="de">Treffer mit Kampagne, Handlungsempfehlung und Quellen. Der Button "Lockdown" öffnet das Playbook.</p><p data-lang="en">Matches with campaign, recommended action and sources. The "Lockdown" button opens the playbook.</p></figcaption></figure>
+                <figure class="card shot"><a href="assets/screenshot-3-watchlist-not-found.png" target="_blank" rel="noopener"><img src="assets/screenshot-3-watchlist-not-found.png" alt="2. Watchlist: not found" loading="lazy"></a><figcaption><h3 data-lang="de">2. Watchlist: nicht gefunden</h3><h3 data-lang="en">2. Watchlist: not found</h3><p data-lang="de">Apps der Watchlist, die zum Prüfzeitpunkt nicht im Tenant gefunden wurden (Stand der Datenbasis, keine Garantie).</p><p data-lang="en">Watchlist apps not found in the tenant at scan time (data snapshot, no guarantee).</p></figcaption></figure>
+                <figure class="card shot"><a href="assets/screenshot-4-app-inventory.png" target="_blank" rel="noopener"><img src="assets/screenshot-4-app-inventory.png" alt="3. App inventory with traffic light" loading="lazy"></a><figcaption><h3 data-lang="de">3. App-Inventar mit Ampel</h3><h3 data-lang="en">3. App inventory with traffic light</h3><p data-lang="de">Alle Apps in sechs Dimensionen: Threat Intel, Passwort-/Rollen-Macht, Admin-Rollen, API-Berechtigungen, Secrets, Publisher.</p><p data-lang="en">All apps across six dimensions: threat intel, password/role power, admin roles, API permissions, secrets, publisher.</p></figcaption></figure>
+                <figure class="card shot"><a href="assets/screenshot-5-app-dossier.png" target="_blank" rel="noopener"><img src="assets/screenshot-5-app-dossier.png" alt="App dossier and lockdown playbook" loading="lazy"></a><figcaption><h3 data-lang="de">App-Dossier und Lockdown-Playbook</h3><h3 data-lang="en">App dossier and lockdown playbook</h3><p data-lang="de">Detailansicht je App mit allen Daten, Quellen und kopierfertigen PowerShell-/REST-Befehlen (zuerst mit -WhatIf).</p><p data-lang="en">Per-app detail view with all data, sources and copy-ready PowerShell/REST commands (use -WhatIf first).</p></figcaption></figure>
+            </div>
+        </section>
         <section class="section" id="guide">
             <h2 class="section-title" data-lang="de">Anleitung</h2>
             <h2 class="section-title" data-lang="en">Guide</h2>
@@ -285,6 +301,7 @@
     </script>
 </body>
 </html>
+
 
 
 
