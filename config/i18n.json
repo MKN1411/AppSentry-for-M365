@@ -78,7 +78,7 @@
     "SectionTenantPolicies": "1. Global Tenant App Protection Settings (T-01 to T-14 | Tenant Hardening)",
     "SectionThreatFocus": "2. 🚨 Active Attack Focus & Known Risk Apps (Threat Intelligence & 24-Month Watchlist)",
     "SectionAppInventory": "3. Complete Application Inventory & General Risk Assessment (All Apps incl. Block 2)",
-    "ThreatFocusSub": "Complete audit check against all 22 known risk & breach apps from the past 24 months (Vendor Breaches, BEC Exfiltration, Traitorware & LotL Admin CLIs): Prominently displays both active matches found in your tenant and the negative audit proof of all checked risk apps NOT present in your tenant (Green) with official source references.",
+    "ThreatFocusSub": "Check against 22 currently known risk & breach apps from the past 24 months (Vendor Breaches, BEC Exfiltration, Traitorware & LotL Admin CLIs): Prominently displays both active matches found in your tenant and the negative audit proof of all checked risk apps NOT present in your tenant (Green) with official source references.",
     "ThreatGroupFoundHeader": "🚨 RISK APPS FOUND IN TENANT (WATCHLIST MATCHES) – Review & Recommended Action",
     "ThreatGroupNotFoundHeader": "🟢 NOT FOUND IN TENANT (CHECKED & NEGATIVE HINT) – 24-Month Watchlist (With Source References)",
     "ThreatFocusEmpty": "✅ No known Vendor Breach, BEC Exfiltration, or Traitorware apps from the Threat Intelligence watchlist were found active in this tenant.",
@@ -146,4 +146,5 @@
     "WhatIfToggleLabel": "-WhatIf Protection Active (Simulation Mode)"
   }
 }
+
 
