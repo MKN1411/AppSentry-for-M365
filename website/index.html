@@ -113,6 +113,20 @@
         html[lang="en"] [data-lang="en"] { display: block; }
         html[lang="en"] span[data-lang="en"], html[lang="de"] span[data-lang="de"] { display: inline; }
         html[lang="en"] span[data-lang="de"], html[lang="de"] span[data-lang="en"] { display: none; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-2 .card { padding: 20px; }
+        .code-box { white-space: pre-wrap; word-break: break-all; }
+        @media (max-width: 760px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 1.85rem; }
+            .hero { padding: 32px 0 24px; }
+            .section { padding: 36px 0; }
+            .section-title { font-size: 1.5rem; }
+            .nav-bar { justify-content: center; }
+            .nav-actions { flex-wrap: wrap; justify-content: center; }
+            .container { padding: 0 16px; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -210,7 +224,7 @@
         <section class="section" id="guide">
             <h2 class="section-title" data-lang="de">Anleitung</h2>
             <h2 class="section-title" data-lang="en">Guide</h2>
-            <div class="grid-3">
+            <div class="grid-2">
                 <div class="card">
                     <span class="card-tag tag-cyan">1</span>
                     <h3 data-lang="de">Voraussetzungen</h3><h3 data-lang="en">Prerequisites</h3>
@@ -271,6 +285,7 @@
     </script>
 </body>
 </html>
+
 
 
 
