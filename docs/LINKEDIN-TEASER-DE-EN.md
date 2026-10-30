@@ -14,13 +14,13 @@ Das Problem: Einmal erteilte App-Berechtigungen (`Application.ReadWrite.All`, `R
 
 Deshalb stelle ich heute **AppSentry for M365** als **100 % kostenloses Open-Source-Tool (MIT)** für die Community bereit:
 
-✅ **100 % Read-Only im Scan:** Keine Schreibrechte im Tenant erforderlich.
+✅ **Nur lesende Berechtigungen im Scan:** Keine Schreibrechte im Tenant erforderlich.
 ✅ **3-Block Sicherheits- & Compliance-Architektur:**
 1️⃣ **14 Globale Tenant-Schutzeinstellungen (`T-01` bis `T-14`):** Prüft User Consent, App-Erstellungsrechte, `defaultAppManagementPolicy` (Passwort-Sperren für Apps/Service Principals) inkl. Entra Audit-Log-Nachweis (*Wer hat wann welche Einstellung geändert?*).
-2️⃣ **Prominente 24-Monats Threat-Intelligence Watchlist (23 Apps):** Prüft Ihren Tenant gezielt auf kompromittierte Drittanbieter-Apps, OAuth-Phishing-Kampagnen und ungehärtete Admin-CLIs – inklusive **grünem Negativnachweis** für Auditoren & Geschäftsführung!
-3️⃣ **Vollständiges App-Inventar & 6-Dimensionen-Ampel:** Erkennt überprivilegierte Apps, Hintertür-Secrets auf fremden Enterprise Apps und fehlende Publisher-Verifizierung.
+2️⃣ **Prominente 24-Monats Threat-Intelligence Watchlist (23 Apps):** Prüft Ihren Tenant gezielt auf derzeit bekannte kompromittierte Drittanbieter-Apps, OAuth-Phishing-Kampagnen und ungehärtete Admin-CLIs – inklusive **grünem Negativhinweis** für Auditoren & Geschäftsführung!
+3️⃣ **Umfassendes App-Inventar & 6-Dimensionen-Ampel:** Kann überprivilegierte Apps, Hintertür-Secrets auf fremden Enterprise Apps und fehlende Publisher-Verifizierung.
 ✅ **3-Stufen Soft-Lockdown Generator (`-WhatIf` First):** Generiert auf Knopfdruck fertige PowerShell-Skripte (Graph SDK & REST) mit **Live-Verifizierung** – vom sanften Soft-Lockdown ohne Datenverlust (Stufe 1) bis zur Notfall-Quarantäne (Stufe 3).
-✅ **NIS2, DORA & ISO 27001 Ready:** Zweisprachiges (DE/EN) Offline-HTML-Dashboard inkl. druckfertigem DIN-A4 Management-Bericht.
+✅ **Kann bei NIS2, DORA & ISO 27001 unterstützen:** Zweisprachiges (DE/EN) Offline-HTML-Dashboard inkl. druckfertigem DIN-A4 Management-Bericht.
 
 🔗 **GitHub Repository (Open Source):** https://github.com/MKN1411/AppSentry-for-M365
 🌐 **Blog & Hintergrundartikel:** https://www.security-and-compliance.pro/blog/
@@ -41,13 +41,13 @@ The catch: Once granted, high-privilege app roles (`Application.ReadWrite.All`, 
 
 Today, I’m excited to release **AppSentry for M365** as a **100% free & open-source tool (MIT)** for the security community:
 
-✅ **100% Read-Only Assessment:** Zero write permissions required during scanning.
+✅ **Read-Only Assessment:** Zero write permissions required during scanning.
 ✅ **3-Block Security & Audit Architecture:**
 1️⃣ **14 Global Tenant Protection Policies (`T-01` to `T-14`):** Evaluates User Consent, app creation rights, and `defaultAppManagementPolicy` password restrictions — complete with Entra Directory Audit Log attribution (*Who changed what and when?*).
-2️⃣ **Prominent 24-Month Threat Intelligence Watchlist (23 Apps):** Screens your tenant against known vendor breaches, adversary-in-the-middle OAuth apps, and LotL CLIs — including a **Green Negative Audit Proof** for CISO & board reporting!
+2️⃣ **Prominent 24-Month Threat Intelligence Watchlist (23 Apps):** Screens your tenant against currently known vendor breaches, adversary-in-the-middle OAuth apps, and LotL CLIs — including a **Green Negative Hint (no guarantee)** for CISO & board reporting!
 3️⃣ **Full App Inventory & 6-Pillar Traffic-Light Scoring:** Detects privilege escalation paths, rogue client secrets on foreign service principals, and unverified publishers.
 ✅ **3-Stage Soft-Lockdown Playbook Generator (`-WhatIf` by default):** Generates ready-to-run PowerShell remediation scripts (Graph SDK & REST) with built-in **Live State Verification** — from non-destructive Stage 1 Soft-Lockdown to Stage 3 Hard Quarantine.
-✅ **NIS2, DORA & ISO 27001 Ready:** Self-contained bilingual (EN/DE) HTML dashboard with one-click A4 PDF/Print Executive Report.
+✅ **Kann bei NIS2, DORA & ISO 27001 unterstützen:** Self-contained bilingual (EN/DE) HTML dashboard with one-click A4 PDF/Print Executive Report.
 
 🔗 **GitHub Repository (Open Source):** https://github.com/MKN1411/AppSentry-for-M365
 🌐 **Security & Compliance Blog:** https://www.security-and-compliance.pro/blog/
@@ -55,3 +55,4 @@ Today, I’m excited to release **AppSentry for M365** as a **100% free & open-s
 How are you currently auditing Enterprise Applications and OAuth supply-chain risks in Entra ID? Let me know in the comments! 👇
 
 #Microsoft365 #EntraID #CyberSecurity #SupplyChainSecurity #NIS2 #DORA #ISO27001 #PowerShell #OpenSource #AppSentry #CISO
+

@@ -1,13 +1,13 @@
 {
   "DE": {
     "AppTitle": "AppSentry für M365 | Entra ID App- & Supply-Chain-Wächter",
-    "SubTitle": "100% Read-Only Sicherheitsanalyse für Enterprise Applications, App Registrations & Tenant-Schutzrichtlinien (inkl. Dossier, PDF-Druck & 3-Stufen-Lockdown)",
+    "SubTitle": "Read-Only Sicherheitsanalyse für Enterprise Applications, App Registrations & Tenant-Schutzrichtlinien (inkl. Dossier, PDF-Druck & 3-Stufen-Lockdown)",
     "SectionTenantPolicies": "1. Globale Tenant App-Schutzeinstellungen (T-01 bis T-14 | Tenant Hardening)",
     "SectionThreatFocus": "2. 🚨 Aktiver Angriffsfokus & Bekannte Risiko-Apps (Threat Intelligence & 24-Monats-Watchlist)",
-    "SectionAppInventory": "3. Vollständiges App-Inventar & Allgemeine Gefahrenanalyse (Alle Apps inkl. Block 2)",
-    "ThreatFocusSub": "Vollständiger Audit-Abgleich aller 22 bekannten Risiko- & Breach-Apps der letzten 24 Monate (Vendor Breaches, BEC-Exfiltration, Traitorware & LotL Admin-CLIs): Zeigt prominent sowohl die im Tenant gefundenen Treffer als auch den Negativnachweis aller geprüften, aber NICHT im Tenant vorhandenen Risiko-Apps (Grün) inkl. offizieller Quellennachweise.",
+    "SectionAppInventory": "3. Umfassendes App-Inventar & Allgemeine Gefahrenanalyse (Alle Apps inkl. Block 2)",
+    "ThreatFocusSub": "Abgleich aller 22 bekannten Risiko- & Breach-Apps der letzten 24 Monate (Vendor Breaches, BEC-Exfiltration, Traitorware & LotL Admin-CLIs): Zeigt prominent sowohl die im Tenant gefundenen Treffer als auch den Negativhinweis aller geprüften, aber NICHT im Tenant vorhandenen Risiko-Apps (Grün) inkl. offizieller Quellennachweise.",
     "ThreatGroupFoundHeader": "🚨 IM TENANT GEFUNDENE RISIKO-APPS (WATCHLIST-TREFFER) – Überprüfung & Handlungsempfehlung",
-    "ThreatGroupNotFoundHeader": "🟢 NICHT IM TENANT VORGEFUNDEN (GEPRÜFT & NEGATIVNACHWEIS) – 24-Monats-Watchlist (Mit Quellennachweis)",
+    "ThreatGroupNotFoundHeader": "🟢 NICHT IM TENANT VORGEFUNDEN (GEPRÜFT & NEGATIVHINWEIS) – 24-Monats-Watchlist (Mit Quellennachweis)",
     "ThreatFocusEmpty": "✅ Keine bekannten Breach-, BEC-Exfiltrations- oder Traitorware-Apps aus der Threat-Intelligence-Datenbank aktiv im Tenant gefunden.",
     "ColThreatCat": "Kritikalität & Typ",
     "ColThreatCamp": "Angriffsfokus / Kampagne (24M)",
@@ -51,7 +51,7 @@
     "ColGovernance": "6. Publisher & Zuweisung",
     "ModalTitlePrefix": "🛡️ Applikations-Sicherheitsdossier & Lockdown:",
     "ModalPolicyTitlePrefix": "⚙️ Empfohlenen Soll-Wert setzen (Tenant-Policy):",
-    "ModalReadOnlyNote": "HINWEIS: AppSentry für M365 arbeitet zu 100% Read-Only. Alle Einstellungen, Berechtigungen und Credentials sind unten vollständig aufgelistet. Im Reiter 'Lockdown-Playbook' finden Sie die kopierfertigen Befehle (mit -WhatIf geschützt).",
+    "ModalReadOnlyNote": "HINWEIS: AppSentry für M365 arbeitet ausschließlich lesend. Alle Einstellungen, Berechtigungen und Credentials sind unten vollständig aufgelistet. Im Reiter 'Lockdown-Playbook' finden Sie die kopierfertigen Befehle (mit -WhatIf geschützt).",
     "TabDossier": "📋 Strukturierte Vollansicht (Alle Daten & Berechtigungen)",
     "TabLockdown": "🔒 Lockdown-Playbook (PowerShell & REST Befehle)",
     "TabGraphSdk": "PowerShell (Microsoft.Graph SDK)",
@@ -74,13 +74,13 @@
   },
   "EN": {
     "AppTitle": "AppSentry for M365 | Entra ID App & Supply-Chain Sentry",
-    "SubTitle": "100% Read-Only Security Assessment for Enterprise Applications, App Registrations & Tenant Protection Policies (incl. Dossier, PDF Export & 3-Stage Lockdown)",
+    "SubTitle": "Read-Only Security Assessment for Enterprise Applications, App Registrations & Tenant Protection Policies (incl. Dossier, PDF Export & 3-Stage Lockdown)",
     "SectionTenantPolicies": "1. Global Tenant App Protection Settings (T-01 to T-14 | Tenant Hardening)",
     "SectionThreatFocus": "2. 🚨 Active Attack Focus & Known Risk Apps (Threat Intelligence & 24-Month Watchlist)",
     "SectionAppInventory": "3. Complete Application Inventory & General Risk Assessment (All Apps incl. Block 2)",
     "ThreatFocusSub": "Complete audit check against all 22 known risk & breach apps from the past 24 months (Vendor Breaches, BEC Exfiltration, Traitorware & LotL Admin CLIs): Prominently displays both active matches found in your tenant and the negative audit proof of all checked risk apps NOT present in your tenant (Green) with official source references.",
     "ThreatGroupFoundHeader": "🚨 RISK APPS FOUND IN TENANT (WATCHLIST MATCHES) – Review & Recommended Action",
-    "ThreatGroupNotFoundHeader": "🟢 NOT FOUND IN TENANT (CHECKED & NEGATIVE AUDIT PROOF) – 24-Month Watchlist (With Source References)",
+    "ThreatGroupNotFoundHeader": "🟢 NOT FOUND IN TENANT (CHECKED & NEGATIVE HINT) – 24-Month Watchlist (With Source References)",
     "ThreatFocusEmpty": "✅ No known Vendor Breach, BEC Exfiltration, or Traitorware apps from the Threat Intelligence watchlist were found active in this tenant.",
     "ColThreatCat": "Criticality & Type",
     "ColThreatCamp": "Attack Focus / Campaign (24M)",
@@ -124,7 +124,7 @@
     "ColGovernance": "6. Publisher & Assignment",
     "ModalTitlePrefix": "🛡️ Application Security Dossier & Lockdown:",
     "ModalPolicyTitlePrefix": "⚙️ Apply Recommended Value (Tenant Policy):",
-    "ModalReadOnlyNote": "NOTE: AppSentry for M365 operates 100% Read-Only. All settings, permissions, and credentials are listed in full below. Switch to the 'Lockdown Playbook' tab for copy-ready remediation commands (protected with -WhatIf).",
+    "ModalReadOnlyNote": "NOTE: AppSentry for M365 operates read-only. All settings, permissions, and credentials are listed in full below. Switch to the 'Lockdown Playbook' tab for copy-ready remediation commands (protected with -WhatIf).",
     "TabDossier": "📋 Structured Full Dossier (All Data & Permissions)",
     "TabLockdown": "🔒 Lockdown Playbook (PowerShell & REST Commands)",
     "TabGraphSdk": "PowerShell (Microsoft.Graph SDK)",
@@ -146,3 +146,4 @@
     "WhatIfToggleLabel": "-WhatIf Protection Active (Simulation Mode)"
   }
 }
+

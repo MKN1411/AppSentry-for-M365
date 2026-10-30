@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppSentry for M365 | Entra ID App & Supply-Chain Security Scanner</title>
-    <meta name="description" content="100% Read-Only Open-Source Security Scanner for Microsoft Entra ID Enterprise Applications, App Registrations, 24-Month Threat Watchlist & 3-Stage Soft-Lockdown Playbooks.">
+    <meta name="description" content="Read-Only Open-Source Security Scanner for Microsoft Entra ID Enterprise Applications, App Registrations, 24-Month Threat Watchlist & 3-Stage Soft-Lockdown Playbooks.">
     <style>
         :root {
             --bg-main: #060d1a;
@@ -124,7 +124,7 @@
             </div>
             <div class="nav-actions">
                 <button class="btn btn-outline" onclick="toggleLang()" id="langBtn">🇬🇧 EN / 🇩🇪 DE</button>
-                <a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">📚 Security Blog</a>
+                <a class="btn btn-outline" href="#guide">📘 Anleitung / Guide</a><a class="btn btn-outline" href="https://www.security-and-compliance.pro/blog/" target="_blank" rel="noopener">📚 Blog</a>
                 <a class="btn btn-primary" href="https://github.com/MKN1411/AppSentry-for-M365" target="_blank" rel="noopener">⭐ GitHub Repo</a>
             </div>
         </div>
@@ -134,11 +134,11 @@
         <section class="hero">
             <div>
                 <div class="badge-pill">
-                    <span data-lang="de">🛡️ 100% Read-Only Scan • 3-Stufen Soft-Lockdown • Open Source (MIT)</span>
-                    <span data-lang="en">🛡️ 100% Read-Only Scan • 3-Stage Soft-Lockdown • Open Source (MIT)</span>
+                    <span data-lang="de">🛡️ Scan mit nur lesenden Berechtigungen • 3-Stufen Soft-Lockdown • Open Source (MIT)</span>
+                    <span data-lang="en">🛡️ Scan mit nur lesenden Berechtigungen • 3-Stage Soft-Lockdown • Open Source (MIT)</span>
                 </div>
-                <h1 data-lang="de">Schützen Sie Microsoft 365 vor <span class="gradient-text">OAuth- & Supply-Chain-Risiken</span></h1>
-                <h1 data-lang="en">Protect Microsoft 365 Against <span class="gradient-text">OAuth & Supply-Chain Risks</span></h1>
+                <h1 data-lang="de">Microsoft 365 unterstützend absichern gegen <span class="gradient-text">OAuth- & Supply-Chain-Risiken</span></h1>
+                <h1 data-lang="en">Helping Reduce Microsoft 365 Exposure to <span class="gradient-text">OAuth & Supply-Chain Risks</span></h1>
 
                 <p class="hero-sub" data-lang="de">
                     <strong>AppSentry für M365</strong> analysiert Ihre globalen Entra ID App-Schutzrichtlinien (<code>T-01</code> bis <code>T-14</code>), gleicht alle Enterprise Apps mit einer kuratierten <strong>24-Monats Threat-Watchlist</strong> ab und generiert sichere <code>-WhatIf</code> Lockdown-Playbooks für CISO, Auditoren (NIS2, DORA, ISO 27001) und Admins.
@@ -159,7 +159,7 @@
                 </div>
 
                 <div class="code-box">
-                    <span class="comment"># PowerShell 7+ Quickstart (100% Read-Only)</span><br>
+                    <span class="comment"># PowerShell 7+ Quickstart (nur lesende Berechtigungen)</span><br>
                     git clone https://github.com/MKN1411/AppSentry-for-M365.git<br>
                     Import-Module .\AppSentry-for-M365\src\AppSentry.psd1 -Force<br>
                     Invoke-AppSentry -Language DE
@@ -188,15 +188,15 @@
 
                 <div class="card">
                     <span class="card-tag tag-red">Block 2 • 23 Threat IOCs</span>
-                    <h3 data-lang="de">24-Monats Threat-Watchlist & Negativnachweis</h3>
-                    <h3 data-lang="en">24-Month Threat Watchlist & Negative Proof</h3>
-                    <p data-lang="de">Erkennt bekannte Supply-Chain-Vorfälle (z. B. ConnectWise/SkyKick, Midnight Blizzard, eM Client, ungehärtete LotL Admin-CLIs) und beweist schwarz auf grün, welche Risiko-Apps <strong>nicht</strong> im Tenant existieren.</p>
-                    <p data-lang="en">Detects high-profile supply-chain breaches (e.g., ConnectWise/SkyKick, Midnight Blizzard, eM Client, unhardened LotL Admin CLIs) and provides a Green Negative Proof for apps <strong>not</strong> present in your tenant.</p>
+                    <h3 data-lang="de">24-Monats Threat-Watchlist & Negativhinweis</h3>
+                    <h3 data-lang="en">24-Month Threat Watchlist & Negative Hint</h3>
+                    <p data-lang="de">Kann derzeit bekannte Supply-Chain-Vorfälle (z. B. ConnectWise/SkyKick, Midnight Blizzard, eM Client, ungehärtete LotL Admin-CLIs) und beweist schwarz auf grün, welche Risiko-Apps <strong>nicht</strong> im Tenant existieren.</p>
+                    <p data-lang="en">Can detect currently known high-profile supply-chain breaches (e.g., ConnectWise/SkyKick, Midnight Blizzard, eM Client, unhardened LotL Admin CLIs) and provides a Green Negative Hint for apps <strong>not</strong> present in your tenant.</p>
                 </div>
 
                 <div class="card">
                     <span class="card-tag tag-green">Block 3 • 3-Stage Lockdown</span>
-                    <h3 data-lang="de">Vollständiges Inventar & 3-Stufen Soft-Lockdown</h3>
+                    <h3 data-lang="de">Umfassendes Inventar & 3-Stufen Soft-Lockdown</h3>
                     <h3 data-lang="en">Full App Inventory & 3-Stage Soft-Lockdown</h3>
                     <p data-lang="de">Analysiert jede App auf Privilegien-Eskalation (<code>Application.ReadWrite.All</code>) und generiert kopierfertige PowerShell-Skripte mit <code>-WhatIf</code> Simulation und Live-Zustandsprüfung.</p>
                     <p data-lang="en">Scores every app for privilege escalation paths (<code>Application.ReadWrite.All</code>) and generates ready-to-run PowerShell scripts with <code>-WhatIf</code> dry-run mode and live state verification.</p>
@@ -205,6 +205,50 @@
 
             <div class="banner-showcase">
                 <img src="assets/appsentry-linkedin-banner.png" alt="Without Protection vs With AppSentry for M365">
+            </div>
+        </section>
+        <section class="section" id="guide">
+            <h2 class="section-title" data-lang="de">Anleitung</h2>
+            <h2 class="section-title" data-lang="en">Guide</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-tag tag-cyan">1</span>
+                    <h3 data-lang="de">Voraussetzungen</h3><h3 data-lang="en">Prerequisites</h3>
+                    <p data-lang="de">PowerShell 7+, Modul <code>Microsoft.Graph</code> (<code>Install-Module Microsoft.Graph -Scope CurrentUser</code>) und eine Entra-Rolle mit Leserechten (z. B. Global Reader oder Security Reader).</p>
+                    <p data-lang="en">PowerShell 7+, the <code>Microsoft.Graph</code> module (<code>Install-Module Microsoft.Graph -Scope CurrentUser</code>) and an Entra role with read access (e.g. Global Reader or Security Reader).</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag tag-cyan">2</span>
+                    <h3 data-lang="de">Installation & Demo</h3><h3 data-lang="en">Install & Demo</h3>
+                    <div class="code-box">git clone https://github.com/MKN1411/AppSentry-for-M365.git<br>cd AppSentry-for-M365<br>Import-Module .\src\AppSentry.psd1 -Force<br>Invoke-AppSentry -DemoMode -Language EN</div>
+                    <p data-lang="de">Der Demo-Modus braucht keine Anmeldung und erzeugt einen Beispielbericht.</p>
+                    <p data-lang="en">Demo mode needs no sign-in and creates a sample report.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag tag-green">3</span>
+                    <h3 data-lang="de">Live-Scan</h3><h3 data-lang="en">Live scan</h3>
+                    <div class="code-box">Invoke-AppSentry -Language DE</div>
+                    <p data-lang="de">Beim ersten Start meldet sich das Tool per <code>Connect-MgGraph</code> mit lesenden Scopes an. Der HTML-Bericht liegt danach im Ordner <code>output</code>.</p>
+                    <p data-lang="en">On first run the tool signs in via <code>Connect-MgGraph</code> with read scopes. The HTML report is then written to the <code>output</code> folder.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag tag-cyan">4</span>
+                    <h3 data-lang="de">Bericht lesen</h3><h3 data-lang="en">Reading the report</h3>
+                    <p data-lang="de">Block 1: Tenant-Einstellungen. Block 2: Abgleich mit der Watchlist (Stand der Datenbasis). Block 3: App-Inventar. Rot, Orange und Grün sind Hinweise zur Priorisierung, keine Bewertung der Sicherheit insgesamt.</p>
+                    <p data-lang="en">Block 1: tenant settings. Block 2: watchlist comparison (as of the data snapshot). Block 3: app inventory. Red, orange and green are prioritization hints, not an overall security rating.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag tag-red">5</span>
+                    <h3 data-lang="de">Lockdown-Skripte</h3><h3 data-lang="en">Lockdown scripts</h3>
+                    <p data-lang="de">Skripte immer zuerst mit <code>-WhatIf</code> ausführen und in einer Testumgebung prüfen. Änderungen können Anwendungen und Prozesse beeinträchtigen.</p>
+                    <p data-lang="en">Always run scripts with <code>-WhatIf</code> first and review them in a test environment. Changes may affect applications and business processes.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag tag-red">!</span>
+                    <h3 data-lang="de">Hinweis</h3><h3 data-lang="en">Disclaimer</h3>
+                    <p data-lang="de">Die Software wird ohne Gewähr bereitgestellt. Es gibt keine Garantie auf Vollständigkeit, Aktualität oder Schutzwirkung. Die Watchlist ist ein Stand und ersetzt keine eigene Sicherheitsprüfung.</p>
+                    <p data-lang="en">The software is provided as is. There is no guarantee of completeness, timeliness or protective effect. The watchlist is a snapshot and does not replace your own security review.</p>
+                </div>
             </div>
         </section>
     </main>
@@ -227,3 +271,5 @@
     </script>
 </body>
 </html>
+
+
