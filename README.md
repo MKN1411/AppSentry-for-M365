@@ -99,14 +99,20 @@ Alle Apps in sechs Dimensionen: Threat Intel, Passwort-/Rollen-Macht, Admin-Roll
 
 ![3. App inventory with traffic light](docs/screenshots/screenshot-4-app-inventory.png)
 
-### App-Dossier und Lockdown-Playbook / App dossier and lockdown playbook
-Detailansicht je App mit allen Daten, Quellen und kopierfertigen PowerShell-/REST-Befehlen (zuerst mit -WhatIf).
+### App-Dossier / App dossier
+Detailansicht je App mit allen Daten, Quellen und Audit-Historie.
 
-![App dossier and lockdown playbook](docs/screenshots/screenshot-5-app-dossier.png)
+![App dossier](docs/screenshots/screenshot-5-app-dossier.png)
+
+### Lockdown-Playbook in 3 Stufen / 3-stage lockdown playbook
+Stufe 1 deaktiviert nur (reversibel), Stufe 2 entzieht Admin-Rollen und lokale Secrets, Stufe 3 entfernt alle Berechtigungen. Standardmäßig mit `-WhatIf`. / Stage 1 only disables (reversible), stage 2 removes admin roles and local secrets, stage 3 removes all permissions. `-WhatIf` by default.
+
+![3-stage lockdown playbook](docs/screenshots/screenshot-6-lockdown-playbook.png)
 
 ---
 ## Hinweis / Disclaimer
 DE: Bereitstellung ohne Gewähr; keine Garantie auf Vollständigkeit, Aktualität oder Schutzwirkung. Die Watchlist ist ein Stand und ersetzt keine eigene Sicherheitsprüfung.
 EN: Provided as is; no guarantee of completeness, timeliness or protective effect. The watchlist is a snapshot and does not replace your own security review.
+
 
 
